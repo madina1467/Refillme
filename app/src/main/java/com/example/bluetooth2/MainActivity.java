@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-    private static final String TAG = "bluetooth2";
+    private static final String TAG = "Refill.me";
 
     Button btnOn, btnOff, btnShampoo, btnAntiseptic, btnDishSoap, btnLiquidSoap;
     TextView txtArduino;
@@ -109,7 +109,6 @@ public class MainActivity extends Activity {
           @Override
           public void onClick(View v) {
               Intent intent = new Intent(v.getContext(), Quantity.class);
-              //There is no limit for number of Extras you want to pass to activity
               intent.putExtra("buttonNumber", 2);
               startActivity(intent);
           }
@@ -120,7 +119,6 @@ public class MainActivity extends Activity {
           @Override
           public void onClick(View v) {
               Intent intent = new Intent(v.getContext(), Quantity.class);
-              //There is no limit for number of Extras you want to pass to activity
               intent.putExtra("buttonNumber", 3);
               startActivity(intent);
           }
@@ -131,7 +129,6 @@ public class MainActivity extends Activity {
           @Override
           public void onClick(View v) {
               Intent intent = new Intent(v.getContext(), Quantity.class);
-              //There is no limit for number of Extras you want to pass to activity
               intent.putExtra("buttonNumber", 4);
               startActivity(intent);
           }
