@@ -8,68 +8,60 @@
     tools:context=".Quantity"
     tools:targetApi="m">
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToMain"
+        android:text="Button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <LinearLayout
         android:id="@+id/product"
-        android:layout_width="336dp"
-        android:layout_height="306dp"
+        android:layout_width="500sp"
+        android:layout_height="400sp"
         android:background="#F2F2F2"
-        android:foregroundTint="#FFFFFF"
         android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="50dp"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/divider7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider8"
+        app:layout_constraintVertical_bias="1.0" >
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="TextView" />
+            />
     </LinearLayout>
 
     <View
-        android:id="@+id/divider8"
-        android:layout_width="729dp"
+        android:id="@+id/divider2"
+        android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_marginTop="32dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/divider7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <View
-        android:id="@+id/divider9"
-        android:layout_width="729dp"
-        android:layout_height="1dp"
-        android:layout_marginBottom="32dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider7"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintBottom_toBottomOf="@+id/divider7"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <View
         android:id="@+id/divider7"
-        android:layout_width="1dp"
-        android:layout_height="309dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="1sp"
+        android:layout_height="400sp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="48dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="338dp" />
+        tools:layout_editor_absoluteX="500sp"
+        tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/button"
+    <View
+        android:id="@+id/divider8"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/divider7"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="624dp"
-        tools:layout_editor_absoluteY="3dp"
-        android:onClick="goToMain"
         tools:ignore="MissingConstraints" />
 </android.support.constraint.ConstraintLayout>

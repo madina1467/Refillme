@@ -47,8 +47,8 @@ public class MainActivity_backup extends Activity {
 
     setContentView(R.layout.activity_main);
 
-    btnOn = (Button) findViewById(R.id.btnOn);					//
-    btnOff = (Button) findViewById(R.id.btnOff);				//
+//    btnOn = (Button) findViewById(R.id.btnOn);					//
+//    btnOff = (Button) findViewById(R.id.btnOff);				//
     txtArduino = (TextView) findViewById(R.id.txtArduino);		//  Arduino
 
     h = new Handler() {

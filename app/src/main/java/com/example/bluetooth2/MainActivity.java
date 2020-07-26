@@ -46,8 +46,8 @@ public class MainActivity extends Activity {
 
     setContentView(R.layout.activity_main);
 
-    btnOn = (Button) findViewById(R.id.btnOn);					//
-    btnOff = (Button) findViewById(R.id.btnOff);				//
+//    btnOn = (Button) findViewById(R.id.btnOn);					//
+//    btnOff = (Button) findViewById(R.id.btnOff);				//
     txtArduino = (TextView) findViewById(R.id.txtArduino);		//  Arduino
     btnShampoo = (Button) findViewById(R.id.btnShampoo);
     btnAntiseptic = (Button) findViewById(R.id.btnAntiseptic);
@@ -78,21 +78,21 @@ public class MainActivity extends Activity {
     //    btAdapter = BluetoothAdapter.getDefaultAdapter();		// Bluetooth
     checkBTState();
 
-    btnOn.setOnClickListener(new OnClickListener() {		// ���������� ���������� ��� ������� �� ������
-      public void onClick(View v) {
-        btnOn.setEnabled(false);
-    //    	mConnectedThread.write("1");	// Bluetooth 1
-        //Toast.makeText(getBaseContext(), "LED", Toast.LENGTH_SHORT).show();
-      }
-    });
+//    btnOn.setOnClickListener(new OnClickListener() {		// ���������� ���������� ��� ������� �� ������
+//      public void onClick(View v) {
+//        btnOn.setEnabled(false);
+//    //    	mConnectedThread.write("1");	// Bluetooth 1
+//        //Toast.makeText(getBaseContext(), "LED", Toast.LENGTH_SHORT).show();
+//      }
+//    });
 
-    btnOff.setOnClickListener(new OnClickListener() {
-      public void onClick(View v) {
-        btnOff.setEnabled(false);
-    //    	mConnectedThread.write("0");	// Bluetooth 0
-        //Toast.makeText(getBaseContext(), ".. LED", Toast.LENGTH_SHORT).show();
-      }
-    });
+//    btnOff.setOnClickListener(new OnClickListener() {
+//      public void onClick(View v) {
+//        btnOff.setEnabled(false);
+//    //    	mConnectedThread.write("0");	// Bluetooth 0
+//        //Toast.makeText(getBaseContext(), ".. LED", Toast.LENGTH_SHORT).show();
+//      }
+//    });
 
       btnShampoo.setOnClickListener(new View.OnClickListener() {
           @Override
