@@ -1,6 +1,7 @@
 <resources>
 
-    <string name="app_name">Bluetooth2</string>
+    <string name="app_name">Refill.me</string>
+    <string name="quantity_activity">Bluetooth2</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_main">Bluetooth2</string>
     <string name="btn_ON">Включить LED</string>

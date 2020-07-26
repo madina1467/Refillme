@@ -4,12 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
- 
-import com.example.bluetooth2.R;
- 
+
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,40 +16,44 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
- 
+
 public class MainActivity extends Activity {
   private static final String TAG = "bluetooth2";
-   
-  Button btnOn, btnOff;
+
+  Button btnOn, btnOff, btnShampoo, btnAntiseptic, btnDishSoap, btnLiquidSoap;
   TextView txtArduino;
   Handler h;
-   
+
+
   private static final int REQUEST_ENABLE_BT = 1;
   final int RECIEVE_MESSAGE = 1;		//  Handler
   private BluetoothAdapter btAdapter = null;
   private BluetoothSocket btSocket = null;
   private StringBuilder sb = new StringBuilder();
-  
+
   private ConnectedThread mConnectedThread;
-   
+
   // SPP UUID
   private static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
- 
+
   // MAC- Bluetooth
   private static String address = "00:15:FF:F2:19:4C";
-   
+
   /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
- 
+
     setContentView(R.layout.activity_main);
- 
+
     btnOn = (Button) findViewById(R.id.btnOn);					//
     btnOff = (Button) findViewById(R.id.btnOff);				//
     txtArduino = (TextView) findViewById(R.id.txtArduino);		//  Arduino
-    
+    btnShampoo = (Button) findViewById(R.id.btnShampoo);
+    btnAntiseptic = (Button) findViewById(R.id.btnAntiseptic);
+    btnLiquidSoap = (Button) findViewById(R.id.btnLiquidSoap);
+    btnDishSoap = (Button) findViewById(R.id.btnDishSoap);
+
 //    h = new Handler() {
 //    	public void handleMessage(android.os.Message msg) {
 //    		switch (msg.what) {
@@ -76,7 +77,7 @@ public class MainActivity extends Activity {
 //
 //    btAdapter = BluetoothAdapter.getDefaultAdapter();		// Bluetooth
     checkBTState();
- 
+
     btnOn.setOnClickListener(new OnClickListener() {		// ���������� ���������� ��� ������� �� ������
       public void onClick(View v) {
     	btnOn.setEnabled(false);
@@ -84,22 +85,66 @@ public class MainActivity extends Activity {
         //Toast.makeText(getBaseContext(), "LED", Toast.LENGTH_SHORT).show();
       }
     });
- 
+
     btnOff.setOnClickListener(new OnClickListener() {
       public void onClick(View v) {
-    	btnOff.setEnabled(false);  
+    	btnOff.setEnabled(false);
 //    	mConnectedThread.write("0");	// Bluetooth 0
         //Toast.makeText(getBaseContext(), ".. LED", Toast.LENGTH_SHORT).show();
       }
     });
+
+      btnShampoo.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(v.getContext(), Quantity.class);
+              //There is no limit for number of Extras you want to pass to activity
+              intent.putExtra("buttonNumber", 1);
+              startActivity(intent);
+          }
+      });
+
+
+      btnAntiseptic.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(v.getContext(), Quantity.class);
+              //There is no limit for number of Extras you want to pass to activity
+              intent.putExtra("buttonNumber", 2);
+              startActivity(intent);
+          }
+      });
+
+
+      btnLiquidSoap.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(v.getContext(), Quantity.class);
+              //There is no limit for number of Extras you want to pass to activity
+              intent.putExtra("buttonNumber", 3);
+              startActivity(intent);
+          }
+      });
+
+
+      btnDishSoap.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              Intent intent = new Intent(v.getContext(), Quantity.class);
+              //There is no limit for number of Extras you want to pass to activity
+              intent.putExtra("buttonNumber", 4);
+              startActivity(intent);
+          }
+      });
+
   }
-   
-  @Override
+
+    @Override
   public void onResume() {
     super.onResume();
- 
+
     Log.d(TAG, "...onResume - ...");
-   
+
     // Set up a pointer to the remote node using it's address.
 //    BluetoothDevice device = btAdapter.getRemoteDevice(address);
 //
@@ -129,27 +174,27 @@ public class MainActivity extends Activity {
 //        errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
 //      }
 //    }
-     
+
     // Create a data stream so we can talk to server.
     Log.d(TAG, ".. Socket...");
-   
+
 //    mConnectedThread = new ConnectedThread(btSocket);
 //    mConnectedThread.start();
   }
- 
+
   @Override
   public void onPause() {
     super.onPause();
- 
+
     Log.d(TAG, "...In onPause()...");
-  
+
 //    try     {
 //      btSocket.close();
 //    } catch (IOException e2) {
 //      errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
 //    }
   }
-   
+
   private void checkBTState() {
 //    // Check for Bluetooth support and then check to make sure it is turned on
 //    // Emulator doesn't support Bluetooth and will return null
@@ -165,33 +210,33 @@ public class MainActivity extends Activity {
 //      }
 //    }
   }
- 
+
   private void errorExit(String title, String message){
 //    Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
 //    finish();
   }
- 
+
   private class ConnectedThread extends Thread {
 	    private final BluetoothSocket mmSocket;
 	    private final InputStream mmInStream;
 	    private final OutputStream mmOutStream;
-	 
+
 	    public ConnectedThread(BluetoothSocket socket) {
 	        mmSocket = socket;
 	        InputStream tmpIn = null;
 	        OutputStream tmpOut = null;
-	 
+
 	        // Get the input and output streams, using temp objects because
 	        // member streams are final
 	        try {
 	            tmpIn = socket.getInputStream();
 	            tmpOut = socket.getOutputStream();
 	        } catch (IOException e) { }
-	 
+
 	        mmInStream = tmpIn;
 	        mmOutStream = tmpOut;
 	    }
-	 
+
 	    public void run() {
 	        byte[] buffer = new byte[256];  // buffer store for the stream
 	        int bytes; // bytes returned from read()
@@ -207,7 +252,7 @@ public class MainActivity extends Activity {
 	            }
 	        }
 	    }
-	 
+
 	    /* Call this from the main activity to send data to the remote device */
 	    public void write(String message) {
 	    	Log.d(TAG, "...blblblbl msg: " + message + "...");
@@ -218,7 +263,7 @@ public class MainActivity extends Activity {
 	            Log.d(TAG, "...Exception blblblbllb msg: " + e.getMessage() + "...");
 	          }
 	    }
-	 
+
 	    /* Call this from the main activity to shutdown the connection */
 	    public void cancel() {
 	        try {
@@ -226,7 +271,10 @@ public class MainActivity extends Activity {
 	        } catch (IOException e) { }
 	    }
 	}
-  
+
+
+
+
 }
 
 
