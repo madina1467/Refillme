@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 
 
     private static final int REQUEST_ENABLE_BT = 1;
-    final int RECIEVE_MESSAGE = 1;		//  Handler
+    final int RECIEVE_MESSAGE = 1;        //  Handler
     private BluetoothAdapter btAdapter = null;
     private BluetoothSocket btSocket = null;
     private StringBuilder sb = new StringBuilder();
@@ -39,44 +39,46 @@ public class MainActivity extends Activity {
     // MAC- Bluetooth
     private static String address = "00:15:FF:F2:19:4C";
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
 
-    setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
 //    btnOn = (Button) findViewById(R.id.btnOn);					//
 //    btnOff = (Button) findViewById(R.id.btnOff);				//
-    txtArduino = (TextView) findViewById(R.id.txtArduino);		//  Arduino
-    btnShampoo = (Button) findViewById(R.id.btnShampoo);
-    btnAntiseptic = (Button) findViewById(R.id.btnAntiseptic);
-    btnLiquidSoap = (Button) findViewById(R.id.btnLiquidSoap);
-    btnDishSoap = (Button) findViewById(R.id.btnDishSoap);
+        txtArduino = (TextView) findViewById(R.id.txtArduino);        //  Arduino
+        btnShampoo = (Button) findViewById(R.id.btnShampoo);
+        btnAntiseptic = (Button) findViewById(R.id.btnAntiseptic);
+        btnLiquidSoap = (Button) findViewById(R.id.btnLiquidSoap);
+        btnDishSoap = (Button) findViewById(R.id.btnDishSoap);
 
-    //    h = new Handler() {
-    //    	public void handleMessage(android.os.Message msg) {
-    //    		switch (msg.what) {
-    //            case RECIEVE_MESSAGE:													// Handler
-    //            	byte[] readBuf = (byte[]) msg.obj;
-    //            	String strIncom = new String(readBuf, 0, msg.arg1);
-    //            	sb.append(strIncom);												//
-    //            	int endOfLineIndex = sb.indexOf("\r\n");							//
-    //            	if (endOfLineIndex > 0) { 											//
-    //            		String sbprint = sb.substring(0, endOfLineIndex);				//
-    //                    sb.delete(0, sb.length());										//  sb
-    //                	txtArduino.setText(" Arduino: " + sbprint); 	        // TextView
-    //                	btnOff.setEnabled(true);
-    //                	btnOn.setEnabled(true);
-    //                }
-    //            	//Log.d(TAG, "..:"+ sb.toString() +  ":" + msg.arg1 + "...");
-    //            	break;
-    //    		}
-    //        };
-    //	};
-    //
-    //    btAdapter = BluetoothAdapter.getDefaultAdapter();		// Bluetooth
-    checkBTState();
+        //    h = new Handler() {
+        //    	public void handleMessage(android.os.Message msg) {
+        //    		switch (msg.what) {
+        //            case RECIEVE_MESSAGE:													// Handler
+        //            	byte[] readBuf = (byte[]) msg.obj;
+        //            	String strIncom = new String(readBuf, 0, msg.arg1);
+        //            	sb.append(strIncom);												//
+        //            	int endOfLineIndex = sb.indexOf("\r\n");							//
+        //            	if (endOfLineIndex > 0) { 											//
+        //            		String sbprint = sb.substring(0, endOfLineIndex);				//
+        //                    sb.delete(0, sb.length());										//  sb
+        //                	txtArduino.setText(" Arduino: " + sbprint); 	        // TextView
+        //                	btnOff.setEnabled(true);
+        //                	btnOn.setEnabled(true);
+        //                }
+        //            	//Log.d(TAG, "..:"+ sb.toString() +  ":" + msg.arg1 + "...");
+        //            	break;
+        //    		}
+        //        };
+        //	};
+        //
+        //    btAdapter = BluetoothAdapter.getDefaultAdapter();		// Bluetooth
+        checkBTState();
 
 //    btnOn.setOnClickListener(new OnClickListener() {		// ���������� ���������� ��� ������� �� ������
 //      public void onClick(View v) {
@@ -94,123 +96,123 @@ public class MainActivity extends Activity {
 //      }
 //    });
 
-      btnShampoo.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent(v.getContext(), Payment.class);
-              //There is no limit for number of Extras you want to pass to activity
-              intent.putExtra("buttonNumber", 1);
-              startActivity(intent);
-          }
-      });
+        btnShampoo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Payment.class);
+                //There is no limit for number of Extras you want to pass to activity
+                intent.putExtra("buttonNumber", 1);
+                startActivity(intent);
+            }
+        });
 
 
-      btnAntiseptic.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent(v.getContext(), Quantity.class);
-              intent.putExtra("buttonNumber", 2);
-              startActivity(intent);
-          }
-      });
+        btnAntiseptic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Quantity.class);
+                intent.putExtra("buttonNumber", 2);
+                startActivity(intent);
+            }
+        });
 
 
-      btnLiquidSoap.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent(v.getContext(), Quantity.class);
-              intent.putExtra("buttonNumber", 3);
-              startActivity(intent);
-          }
-      });
+        btnLiquidSoap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Quantity.class);
+                intent.putExtra("buttonNumber", 3);
+                startActivity(intent);
+            }
+        });
 
 
-      btnDishSoap.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-              Intent intent = new Intent(v.getContext(), Quantity.class);
-              intent.putExtra("buttonNumber", 4);
-              startActivity(intent);
-          }
-      });
+        btnDishSoap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), Quantity.class);
+                intent.putExtra("buttonNumber", 4);
+                startActivity(intent);
+            }
+        });
 
     }
 
     @Override
     public void onResume() {
-    super.onResume();
+        super.onResume();
 
-    Log.d(TAG, "...onResume - ...");
+        Log.d(TAG, "...onResume - ...");
 
-    // Set up a pointer to the remote node using it's address.
-    //    BluetoothDevice device = btAdapter.getRemoteDevice(address);
-    //
-    //    // Two things are needed to make a connection:
-    //    //   A MAC address, which we got above.
-    //    //   A Service ID or UUID.  In this case we are using the
-    //    //     UUID for SPP.
-    //    try {
-    //      btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
-    //    } catch (IOException e) {
-    //      errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
-    //    }
-    //
-    //    // Discovery is resource intensive.  Make sure it isn't going on
-    //    // when you attempt to connect and pass your message.
-    //    btAdapter.cancelDiscovery();
-    //
-    //    // Establish the connection.  This will block until it connects.
-    //    Log.d(TAG, "......");
-    //    try {
-    //      btSocket.connect();
-    //      Log.d(TAG, ".....");
-    //    } catch (IOException e) {
-    //      try {
-    //        btSocket.close();
-    //      } catch (IOException e2) {
-    //        errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
-    //      }
-    //    }
+        // Set up a pointer to the remote node using it's address.
+        //    BluetoothDevice device = btAdapter.getRemoteDevice(address);
+        //
+        //    // Two things are needed to make a connection:
+        //    //   A MAC address, which we got above.
+        //    //   A Service ID or UUID.  In this case we are using the
+        //    //     UUID for SPP.
+        //    try {
+        //      btSocket = device.createRfcommSocketToServiceRecord(MY_UUID);
+        //    } catch (IOException e) {
+        //      errorExit("Fatal Error", "In onResume() and socket create failed: " + e.getMessage() + ".");
+        //    }
+        //
+        //    // Discovery is resource intensive.  Make sure it isn't going on
+        //    // when you attempt to connect and pass your message.
+        //    btAdapter.cancelDiscovery();
+        //
+        //    // Establish the connection.  This will block until it connects.
+        //    Log.d(TAG, "......");
+        //    try {
+        //      btSocket.connect();
+        //      Log.d(TAG, ".....");
+        //    } catch (IOException e) {
+        //      try {
+        //        btSocket.close();
+        //      } catch (IOException e2) {
+        //        errorExit("Fatal Error", "In onResume() and unable to close socket during connection failure" + e2.getMessage() + ".");
+        //      }
+        //    }
 
-    // Create a data stream so we can talk to server.
-    Log.d(TAG, ".. Socket...");
+        // Create a data stream so we can talk to server.
+        Log.d(TAG, ".. Socket...");
 
-    //    mConnectedThread = new ConnectedThread(btSocket);
-    //    mConnectedThread.start();
+        //    mConnectedThread = new ConnectedThread(btSocket);
+        //    mConnectedThread.start();
     }
 
     @Override
     public void onPause() {
-    super.onPause();
+        super.onPause();
 
-    Log.d(TAG, "...In onPause()...");
+        Log.d(TAG, "...In onPause()...");
 
-    //    try     {
-    //      btSocket.close();
-    //    } catch (IOException e2) {
-    //      errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
-    //    }
+        //    try     {
+        //      btSocket.close();
+        //    } catch (IOException e2) {
+        //      errorExit("Fatal Error", "In onPause() and failed to close socket." + e2.getMessage() + ".");
+        //    }
     }
 
     private void checkBTState() {
-    //    // Check for Bluetooth support and then check to make sure it is turned on
-    //    // Emulator doesn't support Bluetooth and will return null
-    //    if(btAdapter==null) {
-    //      errorExit("Fatal Error", "Bluetooth ");
-    //    } else {
-    //      if (btAdapter.isEnabled()) {
-    //        Log.d(TAG, "...Bluetooth...");
-    //      } else {
-    //        //Prompt user to turn on Bluetooth
-    //        Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
-    //        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-    //      }
-    //    }
+        //    // Check for Bluetooth support and then check to make sure it is turned on
+        //    // Emulator doesn't support Bluetooth and will return null
+        //    if(btAdapter==null) {
+        //      errorExit("Fatal Error", "Bluetooth ");
+        //    } else {
+        //      if (btAdapter.isEnabled()) {
+        //        Log.d(TAG, "...Bluetooth...");
+        //      } else {
+        //        //Prompt user to turn on Bluetooth
+        //        Intent enableBtIntent = new Intent(btAdapter.ACTION_REQUEST_ENABLE);
+        //        startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        //      }
+        //    }
     }
 
-    private void errorExit(String title, String message){
-    //    Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
-    //    finish();
+    private void errorExit(String title, String message) {
+        //    Toast.makeText(getBaseContext(), title + " - " + message, Toast.LENGTH_LONG).show();
+        //    finish();
     }
 
     private class ConnectedThread extends Thread {
@@ -228,7 +230,8 @@ public class MainActivity extends Activity {
             try {
                 tmpIn = socket.getInputStream();
                 tmpOut = socket.getOutputStream();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
@@ -242,8 +245,8 @@ public class MainActivity extends Activity {
             while (true) {
                 try {
                     // Read from the InputStream
-                    bytes = mmInStream.read(buffer);		// "buffer"
-                    h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();		//  Handler
+                    bytes = mmInStream.read(buffer);        // "buffer"
+                    h.obtainMessage(RECIEVE_MESSAGE, bytes, -1, buffer).sendToTarget();        //  Handler
                 } catch (IOException e) {
                     break;
                 }
@@ -258,14 +261,15 @@ public class MainActivity extends Activity {
                 mmOutStream.write(msgBuffer);
             } catch (IOException e) {
                 Log.d(TAG, "...Exception blblblbllb msg: " + e.getMessage() + "...");
-              }
+            }
         }
 
         /* Call this from the main activity to shutdown the connection */
         public void cancel() {
             try {
                 mmSocket.close();
-            } catch (IOException e) { }
+            } catch (IOException e) {
+            }
         }
     }
 

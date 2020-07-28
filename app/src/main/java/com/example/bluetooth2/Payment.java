@@ -19,7 +19,7 @@ public class Payment extends AppCompatActivity {
 
 //        TextView tv1 = (TextView) this.findViewById(R.id.textView1);
 
-        switch(pressedButtonNumber){
+        switch (pressedButtonNumber) {
             case 1:
 //                tv1.setText("new text new text");
 //                tv1.setText("" + getString(R.string.btn_shampoo));
@@ -43,7 +43,7 @@ public class Payment extends AppCompatActivity {
 
     public void goToMainFromPayment(View view) {
         System.err.println("!!!!!!!!!!!!GO TO MAIN");
-        Intent intent = new Intent (this, MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }
