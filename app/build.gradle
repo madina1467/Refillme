@@ -5,8 +5,8 @@ android {
     buildToolsVersion "28.0.3"
 
     defaultConfig {
-        applicationId "com.example.bluetooth2"
-        minSdkVersion 21
+        applicationId "com.refill.me"
+        minSdkVersion 28
         targetSdkVersion 28
 //        compileOptions {
 //            sourceCompatibility JavaVersion.VERSION_1_5
@@ -27,6 +27,8 @@ android {
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
     androidTestCompile 'junit:junit:4.12'
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

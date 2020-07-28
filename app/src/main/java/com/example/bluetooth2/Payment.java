@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
-public class Quantity extends AppCompatActivity {
+public class Payment extends AppCompatActivity {
 
     int pressedButtonNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quantity);
+        setContentView(R.layout.activity_payment);
 
         pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
 //        TextView tv1 = (TextView)findViewById(R.id.textView);
@@ -42,7 +41,8 @@ public class Quantity extends AppCompatActivity {
         }
     }
 
-    public void goToMain(View view) {
+    public void goToMainFromPayment(View view) {
+        System.err.println("!!!!!!!!!!!!GO TO MAIN");
         Intent intent = new Intent (this, MainActivity.class);
         startActivity(intent);
     }

@@ -7,26 +7,36 @@
     <application
         android:icon="@drawable/ic_refillme_logo"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Quantity"
+        android:theme="@style/AppTheme"
+        android:banner="Refillme">
+        <activity android:name=".Payment"
+            android:label="@string/payment_activity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".Quantity"
             android:label="@string/quantity_activity"
-            android:theme="@style/Theme.AppCompat.Light">
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
 
-    <uses-sdk android:targetSdkVersion="21" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+
+    <uses-sdk android:targetSdkVersion="28" />
 
 </manifest>
