@@ -40,7 +40,7 @@
                 android:background="#F2F2F2">
 
                 <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/selectedProductName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -52,7 +52,97 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/gradient_box">
+                android:background="@drawable/gradient_box"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/paymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32sp"
+                    android:gravity="center"
+                    android:text="@string/choose_payment_type"
+                    android:textSize="20sp" />
+
+                <RadioGroup
+                    android:id="@+id/radioGroupPaymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/paymentType"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="32sp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:showDividers="beginning|middle|end">
+
+
+                    <RadioButton
+                        android:id="@+id/payByQR"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/radio_background"
+                        android:button="@drawable/radio_button"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/payByQR"
+                        android:textSize="13sp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:onClick="onRadioButtonClicked"/>
+
+                    <RadioButton
+                        android:id="@+id/payByApp"
+                        android:layout_width="150dp"
+                        android:layout_height="120dp"
+                        android:background="@drawable/radio_background"
+                        android:button="@drawable/radio_button"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="@string/payByApp"
+                        android:textSize="13sp"
+                        android:layout_marginRight="10dp"
+                        android:onClick="onRadioButtonClicked"/>
+                </RadioGroup>
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="bottom"
+                    android:layout_gravity="bottom"
+                    android:orientation="horizontal"
+                    android:layout_weight="0"
+                    android:layout_marginBottom="32sp">
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/radioGroup"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/buttonBack" />
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/radioGroup"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/buttonForward" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

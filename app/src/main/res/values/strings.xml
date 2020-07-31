@@ -13,7 +13,19 @@
     <string name="btn_antiseptic">Aнтисептик</string>
     <string name="btn_dish_soap">Гель для мытья посуды</string>
     <string name="btn_liquid_soap">Жидкое мыло</string>
-    <string name="button">Button</string>
 
+    <string name="buttonForward">Далее</string>
+    <string name="buttonBack">Назад</string>
 
+    <string name="choose_payment_type">Выберите способ оплаты</string>
+    <string name="payByQR">
+        <font fgcolor='#606060'>QR Code\n
+            <small>Отсканировать QR Code и оплатить  карточкой</small>
+        </font>
+    </string>
+    <string name="payByApp">
+        <font fgcolor='#606060'>Рахмет / Senim \n
+            <small>Оплата через приложение</small>
+        </font>
+    </string>
 </resources>
