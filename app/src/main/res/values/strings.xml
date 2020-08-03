@@ -16,6 +16,7 @@
 
     <string name="buttonForward">Далее</string>
     <string name="buttonBack">Назад</string>
+    <string name="buttonBackToMain">НА ГЛАВНУЮ</string>
 
     <string name="choose_payment_type">Выберите способ оплаты</string>
     <string name="payByQR">
@@ -28,4 +29,15 @@
             <small>Оплата через приложение</small>
         </font>
     </string>
+
+    <string name="choose_quantity">Выберите количество</string>
+    <string name="quantityForPriceTable100ml">100 мл</string>
+    <string name="refillingWithBottle">ЗАПРАВКА С БУТЫЛКОЙ</string>
+    <string name="refilling">ПРОСТО ЗАПРАВКА</string>
+    <string name="availableQuantity">ДОСТУПНОЕ КОЛИЧЕСТВО</string>
+    <string name="iNeedBottle"><small>Мне нужна бутылка</small></string>
+    <string name="buttonForward10ml"><small>10 мл</small></string>
+    <string name="buttonForward50ml"><small>50 мл</small></string>
+    <string name="buttonForward100ml"><small>100 мл</small></string>
+
 </resources>

@@ -8,59 +8,370 @@
     tools:context=".Quantity"
     tools:targetApi="m">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="goToMain"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/product"
-        android:layout_width="500sp"
-        android:layout_height="400sp"
-        android:background="#F2F2F2"
-        android:orientation="horizontal"
+    <RelativeLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/divider7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider8"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/textView1"
+
+        <Button
+            android:id="@+id/button12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:onClick="goToMainFromQuantity"
+            android:text="@string/buttonBackToMain" />
+
+        <!--        android:background="#FF0000"-->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="oeeooeoeoe" />
-    </LinearLayout>
+            android:orientation="horizontal"
+            android:paddingBottom="32sp"
+            android:paddingTop="48sp"
+            android:weightSum="2"
+            app:layout_constraintTop_toTopOf="parent"> <!-- to show what the parent is -->
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="@+id/divider7"
-        app:layout_constraintTop_toBottomOf="parent"
-        tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="#F2F2F2">
 
-    <View
-        android:id="@+id/divider7"
-        android:layout_width="1sp"
-        android:layout_height="400sp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginTop="48dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="500sp" />
+                <TextView
+                    android:id="@+id/selectedProductName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/gradient_box"
+                    android:gravity="center"
+                    android:text="" />
+            </LinearLayout>
 
-    <View
-        android:id="@+id/divider8"
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toTopOf="@+id/divider7"
-        tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/gradient_box"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/paymentType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32sp"
+                    android:gravity="center"
+                    android:text="@string/choose_quantity"
+                    android:textSize="20sp" />
+
+                <TableLayout
+                    android:id="@+id/tl1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2">
+
+                    <TableRow
+                        android:id="@+id/tableRowQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewEmpty1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewEmpty2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewQuantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/quantityForPriceTable100ml" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRowPriceWithBottle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewTextWithBottle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/refillingWithBottle" />
+
+                        <TextView
+                            android:id="@+id/textViewEmpty3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewPriceWithBottle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/quantityForPriceTable100ml" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRowPriceRefilling"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewTextRefilling"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/refilling" />
+
+                        <TextView
+                            android:id="@+id/textViewEmpty4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewPriceForRefilling"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/quantityForPriceTable100ml" />
+                    </TableRow>
+                </TableLayout>
+
+                <View
+                    android:id="@+id/divider2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="10sp"
+                    android:background="?android:attr/listDivider" />
+
+                <TableLayout
+                    android:id="@+id/tl3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2">
+
+                    <TableRow
+                        android:id="@+id/tableRowAvailable"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewTextAvailableQuantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/availableQuantity" />
+
+                        <TextView
+                            android:id="@+id/textViewEmpty6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewAvailableQuantity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRowChooseQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
+                        <RadioGroup
+                            android:id="@+id/radioGroupPaymentType"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@+id/paymentType"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:orientation="horizontal"
+                            android:showDividers="beginning|middle|end">
+
+
+                            <RadioButton
+                                android:id="@+id/radioButtonForward10ml"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/one_of_three_rb_background"
+                                android:button="@drawable/one_of_three_rb"
+                                android:checked="true"
+                                android:gravity="center"
+                                android:text="@string/buttonForward10ml"
+                                android:textSize="10sp"
+                                android:onClick="onRadioButtonClicked"/>
+
+                            <RadioButton
+                                android:id="@+id/radioButtonForward50ml"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/one_of_three_rb_background"
+                                android:button="@drawable/one_of_three_rb"
+                                android:checked="false"
+                                android:gravity="center"
+                                android:text="@string/buttonForward50ml"
+                                android:textSize="10sp"
+                                android:onClick="onRadioButtonClicked"/>
+
+                            <RadioButton
+                                android:id="@+id/radioButtonForward100ml"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/one_of_three_rb_background"
+                                android:button="@drawable/one_of_three_rb"
+                                android:checked="false"
+                                android:gravity="center"
+                                android:text="@string/buttonForward100ml"
+                                android:textSize="10sp"
+                                android:onClick="onRadioButtonClicked"/>
+                        </RadioGroup>
+
+                        <TextView
+                            android:id="@+id/textViewEmpty5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/decrease"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:onClick="onClick"
+                                android:text="-"/>
+
+                            <TextView
+                                android:id="@+id/integer_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:textSize="20sp" />
+
+                            <Button
+                                android:id="@+id/increase"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:onClick="onClick"
+                                android:text="+" />
+                        </LinearLayout>
+
+                    </TableRow>
+                </TableLayout>
+
+                <TableLayout
+                    android:id="@+id/tl2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:stretchColumns="0,1,2">
+
+
+                    <TableRow
+                        android:id="@+id/tableRowNeedForBootle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/textViewEmpty7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/textViewNeedOfBottle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/iNeedBottle" />
+
+                        <CheckBox
+                            android:id="@+id/checkBoxBottle"
+                            android:layout_width="5dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </TableRow>
+                </TableLayout>
+
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="?android:attr/listDivider" />
+
+                <View
+                    android:id="@+id/divider1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="10sp"
+                    android:layout_marginTop="10sp"
+                    android:background="?android:attr/listDivider" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="32sp"
+                    android:layout_weight="0"
+                    android:gravity="bottom"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnCancel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/radioGroup"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/buttonBack"/>
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/radioGroup"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/buttonForward" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
 </android.support.constraint.ConstraintLayout>

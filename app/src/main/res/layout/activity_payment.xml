@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:onClick="goToMainFromPayment"
-            android:text="Button" />
+            android:text="@string/buttonBackToMain" />
 
         <!--        android:background="#FF0000"-->
         <LinearLayout
@@ -45,13 +45,15 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="@drawable/gradient_box"
-                    android:text="TEST" />
+                    android:text="" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:background="@drawable/gradient_box"
                 android:orientation="vertical">
 
@@ -76,31 +78,29 @@
                     android:showDividers="beginning|middle|end">
 
 
+<!--                    android:button="@drawable/radio_button"-->
                     <RadioButton
                         android:id="@+id/payByQR"
                         android:layout_width="150dp"
                         android:layout_height="120dp"
                         android:background="@drawable/radio_background"
-                        android:button="@drawable/radio_button"
                         android:checked="true"
                         android:gravity="center"
                         android:text="@string/payByQR"
                         android:textSize="13sp"
-                        android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:onClick="onRadioButtonClicked"/>
 
+<!--                    android:button="@drawable/radio_button"-->
                     <RadioButton
                         android:id="@+id/payByApp"
                         android:layout_width="150dp"
                         android:layout_height="120dp"
                         android:background="@drawable/radio_background"
-                        android:button="@drawable/radio_button"
                         android:checked="false"
                         android:gravity="center"
                         android:text="@string/payByApp"
                         android:textSize="13sp"
-                        android:layout_marginRight="10dp"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
 
@@ -126,8 +126,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/radioGroup"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
                         android:layout_marginTop="10dp"
                         android:text="@string/buttonBack" />
 
@@ -137,8 +135,6 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/radioGroup"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginTop="10dp"
                         android:text="@string/buttonForward" />
 
                 </LinearLayout>
