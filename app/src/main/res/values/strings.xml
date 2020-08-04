@@ -21,6 +21,10 @@
     <string name="price_product3_100ml">130</string>
     <string name="price_product4_100ml">140</string>
     <string name="price_product5_100ml">200</string>
+    <string name="price_bottle">200</string>
+
+    <string name="price_string_bottle">200 тг</string>
+
 
     <string name="buttonForward">Далее</string>
     <string name="buttonBack">Назад</string>
@@ -40,8 +44,8 @@
 
     <string name="choose_quantity">Выберите количество</string>
     <string name="quantityForPriceTable100ml">100 мл</string>
-    <string name="refillingWithBottle">ЗАПРАВКА С БУТЫЛКОЙ</string>
-    <string name="refilling">ПРОСТО ЗАПРАВКА</string>
+    <string name="refilling">ЦЕНА ЗАПРАВКИ (100 мл)</string>
+    <string name="refillingWithBottle">ЦЕНА ЗА БУТЫЛКУ</string>
     <string name="availableQuantity">ДОСТУПНОЕ КОЛИЧЕСТВО</string>
     <string name="iNeedBottle"><small>Мне нужна бутылка</small></string>
     <string name="buttonForward10ml"><small>10 мл</small></string>

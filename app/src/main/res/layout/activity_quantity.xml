@@ -74,31 +74,57 @@
                     android:layout_height="wrap_content"
                     android:stretchColumns="0,1,2">
 
+<!--                    <TableRow-->
+<!--                        android:id="@+id/tableRowQuantity"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewEmpty1"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewEmpty2"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="" />-->
+
+<!--                        <TextView-->
+<!--                            android:id="@+id/textViewQuantity"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:gravity="center"-->
+<!--                            android:text="@string/quantityForPriceTable100ml" />-->
+<!--                    </TableRow>-->
+
                     <TableRow
-                        android:id="@+id/tableRowQuantity"
+                        android:id="@+id/tableRowPriceRefilling"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <TextView
-                            android:id="@+id/textViewEmpty1"
+                            android:id="@+id/textViewTextRefilling"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/refilling" />
+
+                        <TextView
+                            android:id="@+id/textViewEmpty4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="" />
 
                         <TextView
-                            android:id="@+id/textViewEmpty2"
+                            android:id="@+id/textViewPriceForRefilling"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/textViewQuantity"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="@string/quantityForPriceTable100ml" />
+                            android:text="0.0" />
                     </TableRow>
 
                     <TableRow
@@ -124,34 +150,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/quantityForPriceTable100ml" />
+                            android:text="@string/price__string_bottle" />
                     </TableRow>
 
-                    <TableRow
-                        android:id="@+id/tableRowPriceRefilling"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/textViewTextRefilling"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/refilling" />
-
-                        <TextView
-                            android:id="@+id/textViewEmpty4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="" />
-
-                        <TextView
-                            android:id="@+id/textViewPriceForRefilling"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="" />
-                    </TableRow>
                 </TableLayout>
 
                 <View
@@ -218,7 +219,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/one_of_three_rb_background"
                                 android:button="@null"
-                                android:checked="true"
+                                android:checked="false"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:text="@string/buttonForward10ml"
                                 android:textSize="10sp"
@@ -242,7 +243,7 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/one_of_three_rb_background"
                                 android:button="@null"
-                                android:checked="false"
+                                android:checked="true"
                                 android:gravity="center_vertical|center_horizontal"
                                 android:text="@string/buttonForward100ml"
                                 android:textSize="10sp"
@@ -321,7 +322,8 @@
                             android:id="@+id/checkBoxBottle"
                             android:layout_width="5dp"
                             android:layout_height="wrap_content"
-                            android:gravity="center" />
+                            android:gravity="center"
+                            android:onClick="onCheckboxClicked"/>
 
                     </TableRow>
 
@@ -344,7 +346,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:textSize="21sp"
-                            android:text="" />
+                            android:text="0.0" />
 
                     </TableRow>
                 </TableLayout>
@@ -381,10 +383,11 @@
                         android:layout_below="@+id/radioGroup"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
+                        android:onClick="goToMainFromQuantity"
                         android:text="@string/buttonBack"/>
 
                     <Button
-                        android:id="@+id/btnSubmit"
+                        android:id="@+id/btnNext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/radioGroup"
