@@ -21,16 +21,16 @@ public class Payment extends AppCompatActivity {
         TextView tv1 = (TextView)findViewById(R.id.selectedProductName);
         switch (pressedButtonNumber) {
             case 1:
-                tv1.setText(getString(R.string.btn_shampoo));
+                tv1.setText(getString(R.string.name_product1));
                 break;
             case 2:
-                tv1.setText(getString(R.string.btn_antiseptic));
+                tv1.setText(getString(R.string.name_product2));
                 break;
             case 3:
-                tv1.setText(getString(R.string.btn_liquid_soap));
+                tv1.setText(getString(R.string.name_product4));
                 break;
             case 4:
-                tv1.setText(getString(R.string.btn_dish_soap));
+                tv1.setText(getString(R.string.name_product3));
                 break;
         }
     }

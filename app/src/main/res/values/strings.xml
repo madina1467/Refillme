@@ -9,10 +9,18 @@
     <string name="btn_OFF">Выключить LED</string>
 
 
-    <string name="btn_shampoo">Шампунь</string>
-    <string name="btn_antiseptic">Aнтисептик</string>
-    <string name="btn_dish_soap">Гель для мытья посуды</string>
-    <string name="btn_liquid_soap">Жидкое мыло</string>
+    <string name="name_product1">Шампунь</string>
+    <string name="name_product2">Aнтисептик</string>
+    <string name="name_product3">Гель для мытья посуды</string>
+    <string name="name_product4">Жидкое мыло</string>
+    <string name="name_product5">Гель для стирки</string>
+
+
+    <string name="price_product1_100ml">250</string>
+    <string name="price_product2_100ml">300</string>
+    <string name="price_product3_100ml">130</string>
+    <string name="price_product4_100ml">140</string>
+    <string name="price_product5_100ml">200</string>
 
     <string name="buttonForward">Далее</string>
     <string name="buttonBack">Назад</string>
@@ -39,5 +47,6 @@
     <string name="buttonForward10ml"><small>10 мл</small></string>
     <string name="buttonForward50ml"><small>50 мл</small></string>
     <string name="buttonForward100ml"><small>100 мл</small></string>
+    <string name="PriceToPay"><small>К оплате</small></string>
 
 </resources>

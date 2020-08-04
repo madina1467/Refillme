@@ -9,8 +9,9 @@ import android.widget.TextView;
 
 public class Quantity extends AppCompatActivity {
 
-    int pressedButtonNumber, count = 0, step = 100, max_count = 10000;
-    TextView tv_count, tv_max_count,  tv_count_price, tv_selected_product_name;
+    int pressedButtonNumber, count = 0, step = 100;
+    double price = 0.0, priceFor100ml, max_count = 10000.0;
+    TextView tv_count, tv_price, tv_max_count, tv_price_for_count, tv_selected_product_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,20 +22,34 @@ public class Quantity extends AppCompatActivity {
         pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
         tv_selected_product_name = (TextView) findViewById(R.id.selectedProductName);
         tv_count = (TextView) findViewById(R.id.integer_number);
-        tv_max_count = (TextView) findViewById(R.id.textViewAvailableQuantity);
+        tv_price = (TextView) findViewById(R.id.textViewPriceForRefilling);
+//        tv_max_count = (TextView) findViewById(R.id.textViewAvailableQuantity);
+        tv_price_for_count = (TextView) findViewById(R.id.textViewPriceToPay);
 
         switch (pressedButtonNumber) {
             case 1:
-                tv_selected_product_name.setText(getString(R.string.btn_shampoo));
+                priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
+
+                tv_selected_product_name.setText(getString(R.string.name_product1));
+                tv_price.setText(getString(R.string.price_product1_100ml));
                 break;
             case 2:
-                tv_selected_product_name.setText(getString(R.string.btn_antiseptic));
+                priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
+
+                tv_selected_product_name.setText(getString(R.string.name_product2));
+                tv_price.setText(getString(R.string.price_product2_100ml));
                 break;
             case 3:
-                tv_selected_product_name.setText(getString(R.string.btn_liquid_soap));
+                priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
+
+                tv_selected_product_name.setText(getString(R.string.name_product3));
+                tv_price.setText(getString(R.string.price_product3_100ml));
                 break;
             case 4:
-                tv_selected_product_name.setText(getString(R.string.btn_dish_soap));
+                priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
+
+                tv_selected_product_name.setText(getString(R.string.name_product4));
+                tv_price.setText(getString(R.string.price_product4_100ml));
                 break;
         }
     }
@@ -46,6 +61,7 @@ public class Quantity extends AppCompatActivity {
 
     public void onRadioButtonClicked(View view) {
         boolean checked = ((RadioButton) view).isChecked();
+        System.out.println("onRadioButtonClicked: " + view.getId());
 
         switch (view.getId()) {
             case R.id.radioButtonForward10ml:
@@ -65,17 +81,41 @@ public class Quantity extends AppCompatActivity {
 
     public void onClick(View v) {
 //        int textview = Integer.parseInt(String.valueOf(findViewById(R.id.integer_number)));
+        System.out.println("!!! onClick: " + count + " ;  price: " + price);
+        System.out.println("!!!! v.getId(): " + v.getId() + " ;  R.id.increase: " + R.id.increase + " ;  R.id.decrease: " + R.id.decrease);
+
         switch (v.getId()) {
             case R.id.increase:
-                if(max_count <= count + step) {
+                System.out.println("0 max_count <= Double.valueOf(count + step): " + (max_count <= Double.valueOf(count + step)));
+                System.out.println(" 000  max_count: " + max_count + " ;  count: " + count + " ;  step: " + step);
+                System.out.println(" 000  count + step: " + (count + step) + " ;  max_count: " + max_count);
+
+                if(max_count >= Double.valueOf(count + step)) {
                     count += step;
+                    price = count * (priceFor100ml / 100.0);
+
+                    System.out.println("1 Increase count: " + count + " ;  price: " + price);
+
                     tv_count.setText("" + count);
+                    tv_price_for_count.setText("" + price);
+
+                    System.out.println("2 Increase count: " + count + " ;  price: " + price);
+
                 }
                 break;
             case R.id.decrease:
-                if(max_count <= count + step) {
+                System.out.println("1 Decrease count: " + count + " ;  price: " + price);
+
+                if(0 <= count - step) {
                     count -= step;
+                    price = count * (priceFor100ml / 100.0);
+
+                    System.out.println("1 Decrease count: " + count + " ;  price: " + price);
+
                     tv_count.setText("" + count);
+                    tv_price_for_count.setText("" + price);
+
+                    System.out.println("2 Decrease count: " + count + " ;  price: " + price);
                 }
                 break;
             default:

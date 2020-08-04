@@ -51,8 +51,8 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
                 android:background="@drawable/gradient_box"
                 android:orientation="vertical"
@@ -150,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/quantityForPriceTable100ml" />
+                            android:text="" />
                     </TableRow>
                 </TableLayout>
 
@@ -207,6 +207,7 @@
                             android:layout_alignStart="@+id/paymentType"
                             android:layout_centerHorizontal="true"
                             android:gravity="center_vertical|center_horizontal"
+                            android:layout_gravity="center_vertical"
                             android:orientation="horizontal"
                             android:showDividers="beginning|middle|end">
 
@@ -216,9 +217,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/one_of_three_rb_background"
-                                android:button="@drawable/one_of_three_rb"
+                                android:button="@null"
                                 android:checked="true"
-                                android:gravity="center"
+                                android:gravity="center_vertical|center_horizontal"
                                 android:text="@string/buttonForward10ml"
                                 android:textSize="10sp"
                                 android:onClick="onRadioButtonClicked"/>
@@ -228,9 +229,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/one_of_three_rb_background"
-                                android:button="@drawable/one_of_three_rb"
+                                android:button="@null"
                                 android:checked="false"
-                                android:gravity="center"
+                                android:gravity="center_vertical|center_horizontal"
                                 android:text="@string/buttonForward50ml"
                                 android:textSize="10sp"
                                 android:onClick="onRadioButtonClicked"/>
@@ -240,9 +241,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/one_of_three_rb_background"
-                                android:button="@drawable/one_of_three_rb"
+                                android:button="@null"
                                 android:checked="false"
-                                android:gravity="center"
+                                android:gravity="center_vertical|center_horizontal"
                                 android:text="@string/buttonForward100ml"
                                 android:textSize="10sp"
                                 android:onClick="onRadioButtonClicked"/>
@@ -263,7 +264,6 @@
                                 android:id="@+id/decrease"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="10sp"
                                 android:onClick="onClick"
                                 android:text="-"/>
 
@@ -283,7 +283,6 @@
                                 android:id="@+id/increase"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="10sp"
                                 android:onClick="onClick"
                                 android:text="+" />
                         </LinearLayout>
@@ -295,13 +294,15 @@
                     android:id="@+id/tl2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:stretchColumns="0,1,2">
+                    android:stretchColumns="0,1,2"
+                    android:gravity="center">
 
 
                     <TableRow
                         android:id="@+id/tableRowNeedForBootle"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
                         <TextView
                             android:id="@+id/textViewEmpty7"
@@ -313,7 +314,7 @@
                             android:id="@+id/textViewNeedOfBottle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
+                            android:gravity="right"
                             android:text="@string/iNeedBottle" />
 
                         <CheckBox
@@ -321,6 +322,29 @@
                             android:layout_width="5dp"
                             android:layout_height="wrap_content"
                             android:gravity="center" />
+
+                    </TableRow>
+
+
+                    <TableRow
+                        android:id="@+id/tableRowPriceToPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/textViewPriceToPayText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/PriceToPay" />
+
+                        <TextView
+                            android:id="@+id/textViewPriceToPay"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textSize="21sp"
+                            android:text="" />
 
                     </TableRow>
                 </TableLayout>
