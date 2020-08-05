@@ -25,7 +25,7 @@ public class Payment extends AppCompatActivity {
         btnCancel = (Button) findViewById(R.id.btnCancel);
 
         pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
-        price = getIntent().getExtras().getInt("price");
+        price = getIntent().getExtras().getDouble("price");
 
         switch (pressedButtonNumber) {
             case 1:
@@ -67,7 +67,6 @@ public class Payment extends AppCompatActivity {
 
 
     public void goToMainFromPayment(View view) {
-        System.err.println("!!!!!!!!!!!!GO TO MAIN");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

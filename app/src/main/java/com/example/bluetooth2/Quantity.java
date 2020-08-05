@@ -9,33 +9,47 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.bluetooth2.dao.Order;
+
 public class Quantity extends AppCompatActivity {
 
     Button btnNext;
     int pressedButtonNumber, count = 0, step = 100;
     double price = 0.0, priceFor100ml, max_count = 10000.0, priceBottle;
     TextView tv_count, tv_price, tv_max_count, tv_price_for_count, tv_selected_product_name;
+  //TODO
+    Order order;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quantity);
 
+//        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        User user = new User("Test", "User");
+//        binding.setUser(user);
+
         tv_selected_product_name = (TextView) findViewById(R.id.selectedProductName);
         tv_count = (TextView) findViewById(R.id.integer_number);
         tv_price = (TextView) findViewById(R.id.textViewPriceForRefilling);
-//        tv_max_count = (TextView) findViewById(R.id.textViewAvailableQuantity);
+        tv_max_count = (TextView) findViewById(R.id.textViewAvailableQuantity);
         tv_price_for_count = (TextView) findViewById(R.id.textViewPriceToPay);
         btnNext = (Button) findViewById(R.id.btnNext);
 
         pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
         price = getIntent().getExtras().getDouble("price");
 
+        order = new Order();
         if(price == 0.0) {
             count = (int) ((price * 100) / priceFor100ml);
             tv_count.setText("" + count);
             tv_price_for_count.setText(price + "  тг");
         }
+
+        //TODO set properly max_count
+        tv_max_count.setText("" + max_count);
+
 
         priceBottle = Double.parseDouble(getString(R.string.price_bottle));
 
@@ -69,11 +83,13 @@ public class Quantity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Payment.class);
-                //There is no limit for number of Extras you want to pass to activity
-                intent.putExtra("buttonNumber", pressedButtonNumber);
-                intent.putExtra("price", price);
-                startActivity(intent);
+                if(price > 0.0) {
+                    Intent intent = new Intent(v.getContext(), Payment.class);
+                    //There is no limit for number of Extras you want to pass to activity
+                    intent.putExtra("buttonNumber", pressedButtonNumber);
+                    intent.putExtra("price", price);
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -104,42 +120,25 @@ public class Quantity extends AppCompatActivity {
     }
 
     public void onClick(View v) {
-//        int textview = Integer.parseInt(String.valueOf(findViewById(R.id.integer_number)));
-        System.out.println("!!! onClick: " + count + " ;  price: " + price);
-        System.out.println("!!!! v.getId(): " + v.getId() + " ;  R.id.increase: " + R.id.increase + " ;  R.id.decrease: " + R.id.decrease);
 
         switch (v.getId()) {
             case R.id.increase:
-                System.out.println("0 max_count <= Double.valueOf(count + step): " + (max_count <= Double.valueOf(count + step)));
-                System.out.println(" 000  max_count: " + max_count + " ;  count: " + count + " ;  step: " + step);
-                System.out.println(" 000  count + step: " + (count + step) + " ;  max_count: " + max_count);
-
                 if(max_count >= Double.valueOf(count + step)) {
                     count += step;
                     price = count * (priceFor100ml / 100.0);
 
-                    System.out.println("1 Increase count: " + count + " ;  price: " + price);
-
                     tv_count.setText("" + count);
                     tv_price_for_count.setText(price + "  тг");
-
-                    System.out.println("2 Increase count: " + count + " ;  price: " + price);
 
                 }
                 break;
             case R.id.decrease:
-                System.out.println("1 Decrease count: " + count + " ;  price: " + price);
-
                 if(0 <= count - step) {
                     count -= step;
                     price = count * (priceFor100ml / 100.0);
 
-                    System.out.println("1 Decrease count: " + count + " ;  price: " + price);
-
                     tv_count.setText("" + count);
                     tv_price_for_count.setText(price + "  тг");
-
-                    System.out.println("2 Decrease count: " + count + " ;  price: " + price);
                 }
                 break;
             default:
@@ -148,10 +147,8 @@ public class Quantity extends AppCompatActivity {
     }
 
     public void onCheckboxClicked(View view) {
-        // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
-        // Check which checkbox was clicked
         switch(view.getId()) {
             case R.id.checkBoxBottle:
                 if (checked) {

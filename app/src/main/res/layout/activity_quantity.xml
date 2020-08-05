@@ -150,7 +150,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/price__string_bottle" />
+                            android:text="@string/price_string_bottle" />
                     </TableRow>
 
                 </TableLayout>
@@ -340,6 +340,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/PriceToPay" />
 
+<!--                        //TODO android:text="@{price}"-->
                         <TextView
                             android:id="@+id/textViewPriceToPay"
                             android:layout_width="wrap_content"
