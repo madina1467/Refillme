@@ -102,7 +102,6 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
                 //There is no limit for number of Extras you want to pass to activity
                 intent.putExtra("buttonNumber", 1);
-                intent.putExtra("price", 0.0);
                 startActivity(intent);
             }
         });
@@ -112,7 +111,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
                 intent.putExtra("buttonNumber", 2);
-                intent.putExtra("price", 0.0);
                 startActivity(intent);
             }
         });
@@ -123,7 +121,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
                 intent.putExtra("buttonNumber", 3);
-                intent.putExtra("price", 0.0);
                 startActivity(intent);
             }
         });
@@ -134,7 +131,6 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
                 intent.putExtra("buttonNumber", 4);
-                intent.putExtra("price", 0.0);
                 startActivity(intent);
             }
         });

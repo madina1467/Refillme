@@ -13,22 +13,17 @@ import com.example.bluetooth2.dao.Order;
 
 public class Quantity extends AppCompatActivity {
 
-    Button btnNext;
-    int pressedButtonNumber, count = 0, step = 100;
-    double price = 0.0, priceFor100ml, max_count = 10000.0, priceBottle;
-    TextView tv_count, tv_price, tv_max_count, tv_price_for_count, tv_selected_product_name;
-  //TODO
+    //TODO binding
     Order order;
-
+    Button btnNext;
+    int step = 100;
+    double priceFor100ml, max_count = 10000.0, priceBottle;
+    TextView tv_count, tv_price, tv_max_count, tv_price_for_count, tv_selected_product_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quantity);
-
-//        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-//        User user = new User("Test", "User");
-//        binding.setUser(user);
 
         tv_selected_product_name = (TextView) findViewById(R.id.selectedProductName);
         tv_count = (TextView) findViewById(R.id.integer_number);
@@ -37,15 +32,15 @@ public class Quantity extends AppCompatActivity {
         tv_price_for_count = (TextView) findViewById(R.id.textViewPriceToPay);
         btnNext = (Button) findViewById(R.id.btnNext);
 
-        pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
-        price = getIntent().getExtras().getDouble("price");
-
-        order = new Order();
-        if(price == 0.0) {
-            count = (int) ((price * 100) / priceFor100ml);
-            tv_count.setText("" + count);
-            tv_price_for_count.setText(price + "  тг");
+        order = (Order) getIntent().getSerializableExtra("order");
+        if(order != null){
+            tv_count.setText("" + order.count);
+            tv_price_for_count.setText(order.price + "  тг");
+        } else {
+            order = new Order();
+            order.product = getIntent().getExtras().getInt("buttonNumber");
         }
+
 
         //TODO set properly max_count
         tv_max_count.setText("" + max_count);
@@ -53,7 +48,7 @@ public class Quantity extends AppCompatActivity {
 
         priceBottle = Double.parseDouble(getString(R.string.price_bottle));
 
-        switch (pressedButtonNumber) {
+        switch (order.product) {
             case 1:
                 priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
 
@@ -83,11 +78,10 @@ public class Quantity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(price > 0.0) {
+                if(order.price > 0.0) {
                     Intent intent = new Intent(v.getContext(), Payment.class);
                     //There is no limit for number of Extras you want to pass to activity
-                    intent.putExtra("buttonNumber", pressedButtonNumber);
-                    intent.putExtra("price", price);
+                    intent.putExtra("order", order);
                     startActivity(intent);
                 }
             }
@@ -123,22 +117,22 @@ public class Quantity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.increase:
-                if(max_count >= Double.valueOf(count + step)) {
-                    count += step;
-                    price = count * (priceFor100ml / 100.0);
+                if(max_count >= Double.valueOf(order.count + step)) {
+                    order.count += step;
+                    order.price = order.count * (priceFor100ml / 100.0);
 
-                    tv_count.setText("" + count);
-                    tv_price_for_count.setText(price + "  тг");
+                    tv_count.setText("" + order.count);
+                    tv_price_for_count.setText(order.price + "  тг");
 
                 }
                 break;
             case R.id.decrease:
-                if(0 <= count - step) {
-                    count -= step;
-                    price = count * (priceFor100ml / 100.0);
+                if(0 <= order.count - step) {
+                    order.count -= step;
+                    order.price = order.count * (priceFor100ml / 100.0);
 
-                    tv_count.setText("" + count);
-                    tv_price_for_count.setText(price + "  тг");
+                    tv_count.setText("" + order.count);
+                    tv_price_for_count.setText(order.price + "  тг");
                 }
                 break;
             default:
@@ -152,12 +146,12 @@ public class Quantity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.checkBoxBottle:
                 if (checked) {
-                    price += priceBottle;
-                    tv_price_for_count.setText(price + "  тг");
+                    order.price += priceBottle;
+                    tv_price_for_count.setText(order.price + "  тг");
                 }
                 else {
-                    price += priceBottle;
-                    tv_price_for_count.setText(price + "  тг");
+                    order.price += priceBottle;
+                    tv_price_for_count.setText(order.price + "  тг");
                 }
                 break;
         }

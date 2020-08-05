@@ -1,6 +1,8 @@
 package com.example.bluetooth2.dao;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order  implements Serializable {
     public int product;
     public int count;
     public double price;

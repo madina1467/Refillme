@@ -8,11 +8,12 @@ import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.example.bluetooth2.dao.Order;
+
 public class Payment extends AppCompatActivity {
 
+    Order order;
     Button btnNext, btnCancel;
-    int pressedButtonNumber;
-    double price;
     boolean payByQR = true;
 
     @Override
@@ -20,14 +21,13 @@ public class Payment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        order = (Order) getIntent().getSerializableExtra("order");
+
         TextView tv1 = (TextView)findViewById(R.id.selectedProductName);
         btnNext = (Button) findViewById(R.id.btnNext);
         btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        pressedButtonNumber = getIntent().getExtras().getInt("buttonNumber");
-        price = getIntent().getExtras().getDouble("price");
-
-        switch (pressedButtonNumber) {
+        switch (order.product) {
             case 1:
                 tv1.setText(getString(R.string.name_product1));
                 break;
@@ -45,11 +45,17 @@ public class Payment extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Payment.class);
-                //There is no limit for number of Extras you want to pass to activity
-                intent.putExtra("price", price);
-                intent.putExtra("buttonNumber", pressedButtonNumber);
-                startActivity(intent);
+                if(payByQR) {
+                    Intent intent = new Intent(v.getContext(), Qrcode.class);
+                    //There is no limit for number of Extras you want to pass to activity
+                    intent.putExtra("order", order);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(v.getContext(), RahmetSenim.class);
+                    //There is no limit for number of Extras you want to pass to activity
+                    intent.putExtra("order", order);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -58,8 +64,7 @@ public class Payment extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
                 //There is no limit for number of Extras you want to pass to activity
-                intent.putExtra("price", price);
-                intent.putExtra("buttonNumber", pressedButtonNumber);
+                intent.putExtra("order", order);
                 startActivity(intent);
             }
         });

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+//TODO
+//apply plugin: 'com.android.databinding'
+
+
 android {
     compileSdkVersion 28
     buildToolsVersion "28.0.3"
@@ -8,10 +12,6 @@ android {
         applicationId "com.refill.me"
         minSdkVersion 28
         targetSdkVersion 28
-//        compileOptions {
-//            sourceCompatibility JavaVersion.VERSION_1_5
-//            targetCompatibility JavaVersion.VERSION_1_5
-//        }
         versionCode 1
         versionName "1.0"
     }
@@ -26,9 +26,6 @@ android {
 //        enabled = true
 //    }
 }
-
-//TODO
-//apply plugin: 'com.android.databinding'
 
 dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
