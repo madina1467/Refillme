@@ -1,22 +1,21 @@
 package com.example.bluetooth2.rest;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.bluetooth2.MainActivity;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -27,62 +26,38 @@ import java.util.Set;
 import javax.net.ssl.HttpsURLConnection;
 
 public class PostMethodDemo extends AsyncTask<String, Void, String> {
+    private ProgressDialog dialog;
     String server_response;
+    String token;
+
+    private Context mContext;
+//    public PostMethodDemo (Context context){
+//        mContext = context;
+//    }
+
+    public PostMethodDemo(MainActivity activity) {
+        dialog = new ProgressDialog(activity);
+        mContext = activity;
+    }
+
+//        dialog.show(this, "Showing Data..", "please wait", true, false);
+
+    @Override
+    protected void  onPreExecute() {
+        super.onPreExecute();
+//        dialog = new ProgressDialog(mContext); //change is here
+        dialog.setMessage("Wait, it's authorization!");
+        dialog.setTitle("Connecting... ");
+        dialog.show();
+//        dialog.setCancelable(false);
+    }
 
     @Override
     protected String doInBackground(String... strings) {
-        URL url;
-        HttpURLConnection urlConnection = null;
 
         try {
-            testCall(strings[0]);
-//            url = new URL(strings[0]);
-//            urlConnection = (HttpURLConnection) url.openConnection();
-//            urlConnection.setDoOutput(true);
-//            urlConnection.setDoInput(true);
-//            urlConnection.setRequestMethod("POST");
-//            urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; UTF-8");
-////            urlConnection.addRequestProperty("Content-Type", "application/x-www-form-urlencoded; UTF-8");
-//
-//
-//            DataOutputStream wr = new DataOutputStream(urlConnection.getOutputStream());
-//
-////            String jsonInputString = "{\"client_id\": \"12697011\",\"client_secret\":\"7k4fv685jckshj5wljplsot707olo2x9sn58uba6l8djhomu4sk92y5xaurd66q8\",\"grant_type\":\"client_credentials\"}"; //data to post
-//            try {
-//
-//                JSONObject obj = new JSONObject();
-//                obj.put("client_id", "12697011");
-//                obj.put("client_secret", "7k4fv685jckshj5wljplsot707olo2x9sn58uba6l8djhomu4sk92y5xaurd66q8");
-//                obj.put("grant_type", "client_credentials");
-//
-//                wr.writeBytes(obj.toString());
-//                Log.e("JSON Input", obj.toString());
-//                wr.flush();
-//                wr.close();
-//            }
-//            catch (Exception ex) {
-//                ex.printStackTrace();
-//            }
-//            urlConnection.connect();
-//
-//            int responseCode = urlConnection.getResponseCode();
-//
-//            if (responseCode == HttpURLConnection.HTTP_OK) {
-//                server_response = readStream(urlConnection.getInputStream());
-//            }
-//
-////            int code = urlConnection.getResponseCode();
-////            System.out.println(code);
-////
-////            try(BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(), "utf-8"))){
-////                StringBuilder response = new StringBuilder();
-////                String responseLine = null;
-////                while ((responseLine = br.readLine()) != null) {
-////                    response.append(responseLine.trim());
-////                }
-////                System.out.println(response.toString());
-////            }
-//
+//            callApiAuth(strings[0]);
+            callApiAuth();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -96,36 +71,32 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         Log.e("Response", "" + server_response);
+
+
+        dialog.cancel();
+
+        AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
+        ac.setTitle("Result");
+        ac.setMessage("Details Successfully Inserted");
+        ac.setCancelable(true);
+
+        ac.setPositiveButton(
+                "Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+
+                    }
+                });
+
+        AlertDialog alert = ac.create();
+        alert.show();
     }
 
-
-    public static String readStream(InputStream in) {
-        BufferedReader reader = null;
-        StringBuffer response = new StringBuffer();
-        try {
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return response.toString();
-    }
-
-    public static void testCall(String httpurl) throws IOException {
+    public void callApiAuth() throws IOException {
         URL url = null;
         try {
-            url = new URL(httpurl);
+            url = new URL("https://gateway.chocodev.kz/auth/token");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -161,9 +132,38 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
         }
         reader.close();
         conn.disconnect();
-        System.out.println("INSTAGRAM token returned: "+builder.toString());
+        server_response = builder.toString();
+
+        JsonElement root = new JsonParser().parse(builder.toString());
+        token = root.getAsJsonObject().get("data").getAsJsonObject().get("token").getAsString();
+
+        Map<String,Object> data = new ObjectMapper()
+                .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
+
+
+        for (Map.Entry<String, Object> entry : data.entrySet()) {
+            System.out.println("!! AAAA" + entry.getKey() + ":" + entry.getValue());
+        }
+
+        System.out.println("Server output returned: "+ builder.toString());
+        System.out.println("Server token returned: "+ token);
+
     }
 
+    public JsonElement readAPIOtput(String builder) throws IOException {
+        JsonElement root = new JsonParser().parse(builder);
+        return root;
+    }
+
+    public Map<String,Object> readAPIData(JsonElement root) throws IOException {
+        Map<String,Object> data = new ObjectMapper()
+                .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
+//        for (Map.Entry<String, Object> entry : data.entrySet()) {
+//            System.out.println("!! AAAA" + entry.getKey() + ":" + entry.getValue());
+//        }
+        return data;
+    }
 }
+
 
 

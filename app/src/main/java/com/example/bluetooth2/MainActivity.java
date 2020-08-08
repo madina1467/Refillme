@@ -1,10 +1,5 @@
 package com.example.bluetooth2;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.UUID;
-
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothSocket;
@@ -13,9 +8,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.bluetooth2.rest.PostMethodDemo;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
 
 public class MainActivity extends Activity {
     private static final String TAG = "Refill.me";
@@ -99,10 +100,14 @@ public class MainActivity extends Activity {
         btnShampoo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Quantity.class);
-                //There is no limit for number of Extras you want to pass to activity
-                intent.putExtra("buttonNumber", 1);
-                startActivity(intent);
+//                PostMethodDemo task = new PostMethodDemo(getApplicationContext());
+//                 task.execute();
+                new PostMethodDemo(MainActivity.this).execute();
+
+//                Intent intent = new Intent(v.getContext(), Quantity.class);
+//                //There is no limit for number of Extras you want to pass to activity
+//                intent.putExtra("buttonNumber", 1);
+//                startActivity(intent);
             }
         });
 
@@ -115,8 +120,7 @@ public class MainActivity extends Activity {
             }
         });
 
-
-        btnLiquidSoap.setOnClickListener(new View.OnClickListener() {
+        btnDishSoap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
@@ -125,8 +129,7 @@ public class MainActivity extends Activity {
             }
         });
 
-
-        btnDishSoap.setOnClickListener(new View.OnClickListener() {
+        btnLiquidSoap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Quantity.class);
