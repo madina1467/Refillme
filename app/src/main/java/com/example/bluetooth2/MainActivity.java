@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.bluetooth2.rest.PostMethodDemo;
+import com.example.bluetooth2.rest.CallAPI;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -102,7 +102,9 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 //                PostMethodDemo task = new PostMethodDemo(getApplicationContext());
 //                 task.execute();
-                new PostMethodDemo(MainActivity.this).execute();
+                CallAPI callAPI = new CallAPI();
+                callAPI.callAuthAPI(MainActivity.this);
+//                new PostMethodDemo(MainActivity.this).execute();
 
 //                Intent intent = new Intent(v.getContext(), Quantity.class);
 //                //There is no limit for number of Extras you want to pass to activity

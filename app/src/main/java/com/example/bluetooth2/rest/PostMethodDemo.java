@@ -1,16 +1,11 @@
 package com.example.bluetooth2.rest;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.bluetooth2.MainActivity;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,19 +23,15 @@ import javax.net.ssl.HttpsURLConnection;
 public class PostMethodDemo extends AsyncTask<String, Void, String> {
     private ProgressDialog dialog;
     String server_response;
-    String token;
+    String action = "";
+    String token = "";
 
     private Context mContext;
-//    public PostMethodDemo (Context context){
-//        mContext = context;
-//    }
 
     public PostMethodDemo(MainActivity activity) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
     }
-
-//        dialog.show(this, "Showing Data..", "please wait", true, false);
 
     @Override
     protected void  onPreExecute() {
@@ -56,15 +47,26 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... strings) {
 
         try {
-//            callApiAuth(strings[0]);
-            callApiAuth();
+            action = strings[0];
+
+            ApiData apiData = new ApiData(action);
+//            System.out.println("!!! Action:" + this.action + "; Token: " +ApiData.token);
+            if("check".equals(action)) {
+                callGetApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
+            } else {
+                callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
+            }
+            if("auth".equals(action)) {
+                ApiData.setToken(server_response);
+            }
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return server_response;
     }
 
     @Override
@@ -72,44 +74,69 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
         super.onPostExecute(s);
         Log.e("Response", "" + server_response);
 
-
         dialog.cancel();
 
-        AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
-        ac.setTitle("Result");
-        ac.setMessage("Details Successfully Inserted");
-        ac.setCancelable(true);
-
-        ac.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-
-                    }
-                });
-
-        AlertDialog alert = ac.create();
-        alert.show();
+//        AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
+//        ac.setTitle("Result");
+//        ac.setMessage("Details Successfully Inserted");
+//        ac.setCancelable(true);
+//
+//        ac.setPositiveButton(
+//                "Ok",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.cancel();
+//
+//                    }
+//                });
+//
+//        AlertDialog alert = ac.create();
+//        alert.show();
     }
 
-    public void callApiAuth() throws IOException {
+    public void callGetApi(String httpURL, HashMap<String, String> params, String requestMethod) throws IOException {
+
+        System.out.println("GET GET GET: " + action);
         URL url = null;
         try {
-            url = new URL("https://gateway.chocodev.kz/auth/token");
+            url = new URL(httpURL);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        HashMap<String, String> params = new HashMap<String, String>();
 
-        params.put("client_id", "12697011");
-        params.put("client_secret", "7k4fv685jckshj5wljplsot707olo2x9sn58uba6l8djhomu4sk92y5xaurd66q8");
-        params.put("grant_type", "client_credentials");
+        HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+        conn.setRequestMethod(requestMethod);
+        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        if(!"auth".equals(action) && !"".equals(ApiData.token)) {
+            conn.setRequestProperty("Authorization", ApiData.token);
+        }
+//        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        conn.setDoOutput(true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        StringBuilder builder = new StringBuilder();
+        for (String line = null; (line = reader.readLine()) != null;) {
+            builder.append(line).append("\n");
+        }
+        reader.close();
+        conn.disconnect();
+        server_response = builder.toString();
+    }
+
+
+    public void callApi(String httpURL, HashMap<String, String> params, String requestMethod) throws IOException {
+        URL url = null;
+        try {
+            url = new URL(httpURL);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         Set set = params.entrySet();
         Iterator i = set.iterator();
         StringBuilder postData = new StringBuilder();
         for (Map.Entry<String, String> param : params.entrySet()) {
+
+            System.out.println("!!! Action: " + action + "; String.valueOf(param.getValue(): " + String.valueOf(param.getValue()));
             if (postData.length() != 0) {
                 postData.append('&');
             }
@@ -120,9 +147,12 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
         byte[] postDataBytes = postData.toString().getBytes("UTF-8");
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
+        conn.setRequestMethod(requestMethod);
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        if(!"auth".equals(action) && !"".equals(ApiData.token)) {
+            conn.setRequestProperty("Authorization", ApiData.token);
+        }
+//        conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
         conn.setDoOutput(true);
         conn.getOutputStream().write(postDataBytes);
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
@@ -133,35 +163,6 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
         reader.close();
         conn.disconnect();
         server_response = builder.toString();
-
-        JsonElement root = new JsonParser().parse(builder.toString());
-        token = root.getAsJsonObject().get("data").getAsJsonObject().get("token").getAsString();
-
-        Map<String,Object> data = new ObjectMapper()
-                .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
-
-
-        for (Map.Entry<String, Object> entry : data.entrySet()) {
-            System.out.println("!! AAAA" + entry.getKey() + ":" + entry.getValue());
-        }
-
-        System.out.println("Server output returned: "+ builder.toString());
-        System.out.println("Server token returned: "+ token);
-
-    }
-
-    public JsonElement readAPIOtput(String builder) throws IOException {
-        JsonElement root = new JsonParser().parse(builder);
-        return root;
-    }
-
-    public Map<String,Object> readAPIData(JsonElement root) throws IOException {
-        Map<String,Object> data = new ObjectMapper()
-                .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
-//        for (Map.Entry<String, Object> entry : data.entrySet()) {
-//            System.out.println("!! AAAA" + entry.getKey() + ":" + entry.getValue());
-//        }
-        return data;
     }
 }
 
