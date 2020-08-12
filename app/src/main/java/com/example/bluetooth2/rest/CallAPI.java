@@ -15,19 +15,19 @@ public class CallAPI {
     }
 
     public void callAuthAPI(MainActivity activity){
-        new PostMethodDemo(activity).execute("auth");
+        new PostMethod(activity).execute("auth");
     }
 
     public void callCheckApi(MainActivity activity){
-        new PostMethodDemo(activity).execute("check");
+        new PostMethod(activity).execute("check");
     }
 
     public void callCreateApi(MainActivity activity){
-        new PostMethodDemo(activity).execute("create");
+        new PostMethod(activity).execute("create");
     }
 
     public void callStatusApi(MainActivity activity){
-        new PostMethodDemo(activity).execute("status");
+        new PostMethod(activity).execute("status");
     }
 
     public Map<String,Object> getAPIResult(String message) throws IOException {

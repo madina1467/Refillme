@@ -20,7 +20,7 @@ import java.util.Set;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class PostMethodDemo extends AsyncTask<String, Void, String> {
+public class PostMethod extends AsyncTask<String, Void, String> {
     private ProgressDialog dialog;
     String server_response;
     String action = "";
@@ -28,7 +28,7 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
 
     private Context mContext;
 
-    public PostMethodDemo(MainActivity activity) {
+    public PostMethod(MainActivity activity) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
     }
@@ -49,7 +49,7 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
         try {
             action = strings[0];
 
-            ApiData apiData = new ApiData(action);
+            ApiData apiData = new ApiDataRahmet(action);
 //            System.out.println("!!! Action:" + this.action + "; Token: " +ApiData.token);
             if("check".equals(action)) {
                 callGetApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
@@ -148,6 +148,10 @@ public class PostMethodDemo extends AsyncTask<String, Void, String> {
 
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestMethod(requestMethod);
+//        conn.setRequestProperty("Content-Type", "application/json");
+//        conn.setRequestProperty("X-Senim-API-Token", "o9mubdh7ri5gdabbjvl89el1c0");
+
+
         conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
         if(!"auth".equals(action) && !"".equals(ApiData.token)) {
             conn.setRequestProperty("Authorization", ApiData.token);
