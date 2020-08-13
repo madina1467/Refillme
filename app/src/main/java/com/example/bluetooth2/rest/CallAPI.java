@@ -15,19 +15,20 @@ public class CallAPI {
     }
 
     public void callAuthAPI(MainActivity activity){
-        new PostMethod(activity).execute("auth");
+        new PostMethod(activity).execute("create", "senim");
+//        new PostMethod(activity).execute("auth", "rahmet");
     }
 
     public void callCheckApi(MainActivity activity){
-        new PostMethod(activity).execute("check");
+        new PostMethod(activity).execute("check", "rahmet");
     }
 
     public void callCreateApi(MainActivity activity){
-        new PostMethod(activity).execute("create");
+        new PostMethod(activity).execute("create", "rahmet");
     }
 
     public void callStatusApi(MainActivity activity){
-        new PostMethod(activity).execute("status");
+        new PostMethod(activity).execute("status", "rahmet");
     }
 
     public Map<String,Object> getAPIResult(String message) throws IOException {
