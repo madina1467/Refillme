@@ -5,13 +5,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.bluetooth2.dao.Order;
+import com.example.bluetooth2.rest.CallAPI;
 
 public class Qrcode extends AppCompatActivity {
 
     Order order;
     Button btnNext, btnCancel;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,9 @@ public class Qrcode extends AppCompatActivity {
 
         btnNext = (Button) findViewById(R.id.btnNext);
         btnCancel = (Button) findViewById(R.id.btnCancel);
+        imageView = (ImageView) findViewById(R.id.qrImage);
+
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,10 +47,17 @@ public class Qrcode extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        apiCall();
     }
 
     public void goToMainFromPayment(View view) {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void apiCall(){
+        CallAPI callAPI = new CallAPI();
+        callAPI.callAuthAPI(Qrcode.this, imageView);
     }
 }

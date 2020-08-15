@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.bluetooth2.rest.CallAPI;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -100,16 +98,10 @@ public class MainActivity extends Activity {
         btnShampoo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                PostMethodDemo task = new PostMethodDemo(getApplicationContext());
-//                 task.execute();
-                CallAPI callAPI = new CallAPI();
-                callAPI.callAuthAPI(MainActivity.this);
-//                new PostMethodDemo(MainActivity.this).execute();
-
-//                Intent intent = new Intent(v.getContext(), Quantity.class);
-//                //There is no limit for number of Extras you want to pass to activity
-//                intent.putExtra("buttonNumber", 1);
-//                startActivity(intent);
+                Intent intent = new Intent(v.getContext(), Quantity.class);
+                //There is no limit for number of Extras you want to pass to activity
+                intent.putExtra("buttonNumber", 1);
+                startActivity(intent);
             }
         });
 

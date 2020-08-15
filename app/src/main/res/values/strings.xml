@@ -53,6 +53,7 @@
     <string name="buttonForward100ml"><small>100 мл</small></string>
     <string name="PriceToPay"><small>К оплате</small></string>
     <string name="FinalPriceToPay">ИТОГО К ОПЛАТЕ</string>
+    <string name="qr_image_description">QR CODE</string>
 
     <string name="rahmet">Рахмет</string>
     <string name="senim">Senim</string>

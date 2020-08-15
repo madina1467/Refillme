@@ -2,14 +2,18 @@ package com.example.bluetooth2.rest;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
+import android.widget.ImageView;
 
-import com.example.bluetooth2.MainActivity;
+import com.example.bluetooth2.Qrcode;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.ref.WeakReference;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
@@ -22,15 +26,23 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class PostMethod extends AsyncTask<String, Void, String> {
     private ProgressDialog dialog;
+    private final WeakReference<ImageView> imageViewReference;
     String server_response;
     String action = "";
     String company = "";
 
     private Context mContext;
 
-    public PostMethod(MainActivity activity) {
+    public PostMethod(Qrcode activity) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
+        imageViewReference = null;
+    }
+
+    public PostMethod(Qrcode activity, ImageView imageView) {
+        dialog = new ProgressDialog(activity);
+        mContext = activity;
+        imageViewReference = new WeakReference<ImageView>(imageView);
     }
 
     @Override
@@ -82,6 +94,27 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         Log.e("Response", "" + server_response);
 
         dialog.cancel();
+
+//        Bitmap bitmap = decodeSampledBitmapFromResource(IconCompat.getResources(), data, 100, 100));
+
+        try {
+            String base = (String) CallAPI.getAPIResult(server_response).get("image");
+            byte[] imageAsBytes = Base64.decode(base.getBytes(), Base64.DEFAULT);
+
+            System.out.println("imageViewReference: " + imageViewReference);
+            System.out.println("base: " + base);
+            System.out.println("imageAsBytes: " + imageAsBytes);
+            System.out.println("url: " + (String) CallAPI.getAPIResult(server_response).get("url"));
+
+            if (imageViewReference != null) {
+                final ImageView imageView = imageViewReference.get();
+                if (imageView != null) {
+                    imageView.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
 //        ac.setTitle("Result");
