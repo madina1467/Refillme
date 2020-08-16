@@ -56,7 +56,7 @@ public class GetMethod extends AsyncTask<String, Void, String> {
             callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
 
             if("auth".equals(action)) {
-                ApiData.setToken(server_response);
+                ApiData.setRahmetToken(server_response);
             }
 
         } catch (MalformedURLException e) {

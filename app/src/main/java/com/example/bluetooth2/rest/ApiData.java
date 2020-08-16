@@ -17,7 +17,7 @@ public abstract class ApiData {
         this.action = action;
     }
 
-    public static void setToken(String AuthMessage) throws IOException {
+    public static void setRahmetToken(String AuthMessage) throws IOException {
         JsonElement root = new JsonParser().parse(AuthMessage);
         Map<String,Object> data = new ObjectMapper()
                 .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);

@@ -57,5 +57,16 @@
 
     <string name="rahmet">Рахмет</string>
     <string name="senim">Senim</string>
+    <string name="rahmetCode">rahmet</string>
+    <string name="senimCode">senim</string>
+
+
+    <string name="errorMessageNoAnswer">Сервер не отвечает.</string>
+    <string name="errorMessageIncorrectURL">Проблемы с адресом сервера.</string>
+    <string name="errorMessageNotSpecified">Не определенная ошибка.</string>
+    <string name="errorMessageNotCorrectQR">Не приходит QR Code от сервера.</string>
+    <string name="errorMessageNotSpecifiedQR">Не определенная ошибка QR Code.</string>
+
+    <string name="ok">Хорошо</string>
 
 </resources>

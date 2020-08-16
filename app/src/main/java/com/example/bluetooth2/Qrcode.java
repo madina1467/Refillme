@@ -15,6 +15,7 @@ public class Qrcode extends AppCompatActivity {
     Order order;
     Button btnNext, btnCancel;
     ImageView imageView;
+    String payby = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,10 @@ public class Qrcode extends AppCompatActivity {
 
 
         order = (Order) getIntent().getSerializableExtra("order");
+
+        if(getIntent().getStringExtra("payBy") != null) {
+            payby = getIntent().getStringExtra("payBy");
+        }
 
         btnNext = (Button) findViewById(R.id.btnNext);
         btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -33,7 +38,7 @@ public class Qrcode extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), MainActivity.class);
+                Intent intent = new Intent(v.getContext(), Paid.class);
                 intent.putExtra("order", order);
                 startActivity(intent);
             }
@@ -57,7 +62,16 @@ public class Qrcode extends AppCompatActivity {
     }
 
     public void apiCall(){
-        CallAPI callAPI = new CallAPI();
-        callAPI.callAuthAPI(Qrcode.this, imageView);
+
+        if("senim".equals(payby)) {
+            CallAPI callAPI = new CallAPI(payby);
+            callAPI.callSenimCreateAPI(Qrcode.this, imageView);
+        } else if("rahmet".equals(payby)) {
+            CallAPI callAPI = new CallAPI(payby);
+            callAPI.callRahmetCreateAPI(Qrcode.this, imageView);
+        } else {
+            CallAPI callAPI = new CallAPI("");
+            callAPI.callSenimAPI(Qrcode.this, imageView);
+        }
     }
 }

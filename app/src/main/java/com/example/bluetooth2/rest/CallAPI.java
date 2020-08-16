@@ -13,29 +13,51 @@ import java.util.Map;
 
 public class CallAPI {
 
-    public CallAPI(){
+    public String company;
+
+    public CallAPI(String company){
+        this.company = company;
     }
 
-    public void callAuthAPI(Qrcode activity, ImageView imageView){
-        new PostMethod(activity, imageView).execute("create", "senim");
-//        new PostMethod(activity).execute("auth", "rahmet");
+    public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
+        new PostMethod(activity, imageView).execute("create", this.company);
     }
 
-    public void callCheckApi(Qrcode activity){
-        new PostMethod(activity).execute("check", "rahmet");
+    public void callRahmetCreateAPI(Qrcode activity, ImageView imageView){
+
+        //TODO
+//        new PostMethod(activity).execute("check", this.action);
+
+        new PostMethod(activity).execute("auth", this.company);
+        new PostMethod(activity).execute("create", this.company);
     }
 
-    public void callCreateApi(Qrcode activity){
-        new PostMethod(activity).execute("create", "rahmet");
+    public void callSenimStatusAPI(Qrcode activity, ImageView imageView){
+        //todo
+        new PostMethod(activity).execute("status", this.company);
     }
 
-    public void callStatusApi(Qrcode activity){
-        new PostMethod(activity).execute("status", "rahmet");
+    public void callRahmetStatusAPI(Qrcode activity, ImageView imageView){
+        new PostMethod(activity).execute("status", this.company);
     }
 
-    public static Map<String,Object> getAPIResult(String message) throws IOException {
+    public void callSenimAPI(Qrcode activity, ImageView imageView){
+        //TODO
+    }
+
+
+    public static Map<String,Object> getAPIResult(String message, String comp) throws IOException {
         JsonElement root = readAPIOtput(message.toString());
-        return readSenimAPIData(root);
+
+        if("senim".equals(comp)) {
+            return readSenimAPIData(root);
+        } else if("rahmet".equals(comp)){
+            return readAPIData(root);
+        } else {
+            System.err.println("COMPANY TO READ API NOT SHOWN");
+            return readAPIData(root);
+//            throw new IOException("COMPANY TO READ API NOT SHOWN");
+        }
     }
 
     public static JsonElement readAPIOtput(String builder) throws IOException {
@@ -53,17 +75,8 @@ public class CallAPI {
     }
 
     public static Map<String,Object> readSenimAPIData(JsonElement root) throws IOException {
-//        Map<String,Object> content = new ObjectMapper()
-//                .readValue(root.getAsJsonObject().get("content").getAsJsonObject().toString(), HashMap.class);
-//        Map<String,Object> data = new ObjectMapper()
-//                .readValue(content.get("data").toString(), HashMap.class);
-
-//        Map<String, Map<String, String>> map =
-//                new HashMap<String, Map<String, String>>();
-
         Map<String, Map<String, Object>> map = new ObjectMapper()
                 .readValue(root.getAsJsonObject().get("content").getAsJsonObject().toString(), HashMap.class);;
-
         return map.get("data");
     }
 

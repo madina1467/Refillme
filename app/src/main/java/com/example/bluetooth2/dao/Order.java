@@ -3,7 +3,8 @@ package com.example.bluetooth2.dao;
 import java.io.Serializable;
 
 public class Order  implements Serializable {
-    public int id;
+    public int productId;
+    public int branchId;
     public int product;
     public int count;
     public double price;

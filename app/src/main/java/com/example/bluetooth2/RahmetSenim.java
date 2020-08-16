@@ -13,6 +13,7 @@ public class RahmetSenim extends AppCompatActivity {
 
     Order order;
     Button btnNext, btnCancel;
+    String payBy = "rahmet";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +30,8 @@ public class RahmetSenim extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Qrcode.class);
-                //There is no limit for number of Extras you want to pass to activity
-//                intent.putExtra("price", price);
-//                intent.putExtra("buttonNumber", pressedButtonNumber);
+                intent.putExtra("payBy", payBy);
+                intent.putExtra("order", order);
                 startActivity(intent);
             }
         });
@@ -40,9 +40,7 @@ public class RahmetSenim extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Payment.class);
-                //There is no limit for number of Extras you want to pass to activity
-//                intent.putExtra("price", price);
-//                intent.putExtra("buttonNumber", pressedButtonNumber);
+                intent.putExtra("order", order);
                 startActivity(intent);
             }
         });
@@ -54,11 +52,11 @@ public class RahmetSenim extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.payByRahmet:
                 if (checked)
-//                    payByQR = true;
+                    payBy = "rahmet";
                 break;
             case R.id.payBySenim:
                 if (checked)
-//                    payByQR = false;
+                    payBy = "senim";
                 break;
         }
     }
