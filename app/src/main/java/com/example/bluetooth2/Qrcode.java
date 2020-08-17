@@ -13,7 +13,7 @@ import com.example.bluetooth2.rest.CallAPI;
 public class Qrcode extends AppCompatActivity {
 
     Order order;
-    Button btnNext, btnCancel;
+    Button btnNext, btnCancel, buttonPaid;
     ImageView imageView;
     String payby = "";
 
@@ -29,18 +29,38 @@ public class Qrcode extends AppCompatActivity {
             payby = getIntent().getStringExtra("payBy");
         }
 
-        btnNext = (Button) findViewById(R.id.btnNext);
+//        btnNext = (Button) findViewById(R.id.btnNext);
+        buttonPaid = (Button) findViewById(R.id.buttonPaid);
         btnCancel = (Button) findViewById(R.id.btnCancel);
         imageView = (ImageView) findViewById(R.id.qrImage);
 
 
 
-        btnNext.setOnClickListener(new View.OnClickListener() {
+//        btnNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(v.getContext(), Paid.class);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
+//            }
+//        });
+
+        buttonPaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Paid.class);
-                intent.putExtra("order", order);
-                startActivity(intent);
+                if("senim".equals(payby)) {
+                    CallAPI callAPI = new CallAPI(payby);
+                    callAPI.callSenimStatusAPI(Qrcode.this);
+                } else if("rahmet".equals(payby)) {
+                    CallAPI callAPI = new CallAPI(payby);
+                    callAPI.callRahmetStatusAPI(Qrcode.this);
+                } else {
+//                    TODO
+                }
+
+//                Intent intent = new Intent(v.getContext(), Paid.class);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
             }
         });
 

@@ -28,6 +28,7 @@
 
     <string name="buttonForward">Далее</string>
     <string name="buttonBack">Назад</string>
+    <string name="buttonPaid">Оплачено</string>
     <string name="buttonBackToMain">НА ГЛАВНУЮ</string>
 
     <string name="choose_payment_type">Выберите способ оплаты</string>
@@ -66,6 +67,7 @@
     <string name="errorMessageNotSpecified">Не определенная ошибка.</string>
     <string name="errorMessageNotCorrectQR">Не приходит QR Code от сервера.</string>
     <string name="errorMessageNotSpecifiedQR">Не определенная ошибка QR Code.</string>
+    <string name="errorMessageNotCorrectRequest">Не правильный запрос на сервер.</string> <!--TODO chech wether it is true or not-->
 
     <string name="ok">Хорошо</string>
 

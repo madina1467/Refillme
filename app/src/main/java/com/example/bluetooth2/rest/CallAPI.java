@@ -32,12 +32,11 @@ public class CallAPI {
         new PostMethod(activity).execute("create", this.company);
     }
 
-    public void callSenimStatusAPI(Qrcode activity, ImageView imageView){
-        //todo
+    public void callSenimStatusAPI(Qrcode activity){
         new PostMethod(activity).execute("status", this.company);
     }
 
-    public void callRahmetStatusAPI(Qrcode activity, ImageView imageView){
+    public void callRahmetStatusAPI(Qrcode activity){
         new PostMethod(activity).execute("status", this.company);
     }
 
@@ -78,6 +77,13 @@ public class CallAPI {
         Map<String, Map<String, Object>> map = new ObjectMapper()
                 .readValue(root.getAsJsonObject().get("content").getAsJsonObject().toString(), HashMap.class);;
         return map.get("data");
+    }
+
+    public static Map<String,Object> readAPIOtputResult(String builder) throws IOException {
+        JsonElement root = new JsonParser().parse(builder);
+        Map<String,Object> data = new ObjectMapper()
+                .readValue(root.getAsJsonObject().toString(), HashMap.class);
+        return data;
     }
 
 }

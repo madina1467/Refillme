@@ -28,6 +28,8 @@ import java.util.concurrent.TimeoutException;
 
 import javax.net.ssl.HttpsURLConnection;
 
+import static com.example.bluetooth2.rest.CallAPI.readAPIOtputResult;
+
 public class PostMethod extends AsyncTask<String, Void, String> {
     private ProgressDialog dialog;
     private final WeakReference<ImageView> imageViewReference;
@@ -106,7 +108,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.e("Response", "" + server_response);
+        Log.e("Response from: " + company + "; method: " + action, "" + server_response);
 
         dialog.cancel();
 
@@ -162,6 +164,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         reader.close();
         conn.disconnect();
         server_response = builder.toString();
+        this.checkResponseForError(server_response);
     }
 
 
@@ -221,6 +224,23 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         AlertDialog alert = ac.create();
         alert.show();
+    }
+
+    public void checkResponseForError(String result) {
+        try {
+            Map<String,Object> output = readAPIOtputResult(result);
+            // rahmet
+            if(output.get("status") != null && output.get("error_code") != null) {
+                if ("error".equals(output.get("status").toString()) || !"0".equals(output.get("error_code").toString())) {
+                    throw new IOException("Error answer from server.");
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("IOException. checkForError()");
+            error = true;
+            e.printStackTrace();
+            errorMessage = mContext.getResources().getString(R.string.errorMessageNotCorrectRequest);
+        }
     }
 
 }

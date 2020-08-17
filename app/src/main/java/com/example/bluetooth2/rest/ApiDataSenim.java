@@ -23,14 +23,14 @@ public class ApiDataSenim extends ApiData {
                 break;
             case "create":
                 params.put("branchId", "3474");
-                params.put("dimension", "500");
+                params.put("dimension", "100");
                 params.put("duration", "10000");
                 params.put("format", "1");
                 params.put("orderAmount", "12332");
                 params.put("orderId", "11");
                 break;
             case "status":
-                params.put("merchant_order_ids[]", "123543");
+                params.put("orderId", "11");
                 break;
 //            case "refund":
 //                break;
@@ -47,7 +47,7 @@ public class ApiDataSenim extends ApiData {
             case "create":
                 return "https://test.senim.kz/api/integration/v2/qr";
             case "status":
-                return "";
+                return "https://test.senim.kz/api/integration/v2/orders/status";
             case "refund":
                 return "htt";
         }
