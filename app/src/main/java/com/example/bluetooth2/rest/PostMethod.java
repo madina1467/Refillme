@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.example.bluetooth2.Qrcode;
 import com.example.bluetooth2.R;
+import com.example.bluetooth2.dao.Order;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,32 +34,32 @@ import static com.example.bluetooth2.rest.CallAPI.readAPIOtputResult;
 public class PostMethod extends AsyncTask<String, Void, String> {
     private ProgressDialog dialog;
     private final WeakReference<ImageView> imageViewReference;
-    String server_response;
-    String action = "";
-    String company = "";
-    final int TIMEOUT_MILLISEC = 30000;
-    boolean error = false;
-    String errorMessage = "";
-
+    private String server_response, action = "", errorMessage = "";
+    private final int TIMEOUT_MILLISEC = 30000;
+    private boolean error = false;
+    private Map<String, Object> data_response_map;
+    private Order mOrder;
     private Context mContext;
 
-    public PostMethod(Qrcode activity) {
+    public PostMethod(Qrcode activity, Order order) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
         imageViewReference = null;
+        mOrder = order;
     }
 
-    public PostMethod(Qrcode activity, ImageView imageView) {
+    public PostMethod(Qrcode activity, Order order, ImageView imageView) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
         imageViewReference = new WeakReference<ImageView>(imageView);
+        mOrder = order;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        dialog.setMessage("Wait, it's authorization!");
-        dialog.setTitle("Connecting... ");
+        dialog.setMessage(mContext.getResources().getString(R.string.waitingForConnection));
+        dialog.setTitle(mContext.getResources().getString(R.string.waiting));
         dialog.show();
     }
 
@@ -67,11 +68,10 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         try {
             action = strings[0];
-            company = strings[1];
 
             ApiData apiData;
 
-            if ("senim".equals(company)) {
+            if ("senim".equals(mOrder.getCompany())) {
                 apiData = new ApiDataSenim(action);
             } else {
                 apiData = new ApiDataRahmet(action);
@@ -81,7 +81,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 //                callGetApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
             } else {
                 callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
-                if ("rahmet".equals(company) && "auth".equals(action)) {
+                if ("rahmet".equals(mOrder.getCompany()) && "auth".equals(action)) {
                     ApiData.setRahmetToken(server_response);
                 }
             }
@@ -108,16 +108,24 @@ public class PostMethod extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.e("Response from: " + company + "; method: " + action, "" + server_response);
+        Log.e("Response from: " + mOrder.getCompany() + "; method: " + action, "" + server_response);
 
         dialog.cancel();
 
         if(error) {
-            showAlert(errorMessage);
+            showTextAlert(errorMessage);
+        } else {
+            if ("create".equals(action)) {
+                showQRCodeImageView();
+            } else if ("status".equals(action)) {
+                showPaidStatusAlert();
+            }
+
+            if(error) { //TODO after error
+                showTextAlert(errorMessage);
+            }
         }
-        else if ("create".equals(action)) {
-            showImageView();
-        }
+
     }
 
 
@@ -144,11 +152,11 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         conn.setConnectTimeout(TIMEOUT_MILLISEC);
         conn.setReadTimeout(TIMEOUT_MILLISEC);
-        if ("senim".equals(company)) {
+        if ("senim".equals(mOrder.getCompany())) {
 //            conn.setRequestProperty("Content-Type", "application/json"); //TODO tell them!
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("X-Senim-API-Token", "o9mubdh7ri5gdabbjvl89el1c0");
-        } else if ("rahmet".equals(company)) {
+        } else if ("rahmet".equals(mOrder.getCompany())) {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             if (!"auth".equals(action) && !"".equals(ApiData.token)) {
                 conn.setRequestProperty("Authorization", ApiData.token);
@@ -165,16 +173,40 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         conn.disconnect();
         server_response = builder.toString();
         this.checkResponseForError(server_response);
+        this.responseMap();
+    }
+
+    private void responseMap() {
+        try {
+            if ("senim".equals(mOrder.getCompany())) {
+                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getCompany());
+            } else if ("rahmet".equals(mOrder.getCompany())) {
+                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getCompany());
+            }
+        } catch (NullPointerException e) {
+            System.err.println("NullPointerException. responseMap()");
+            error = true;
+            e.printStackTrace();
+            errorMessage = mContext.getResources().getString(R.string.errorMessageNotCorrectQR);
+        } catch (IOException e) {
+            System.err.println("IOException. responseMap()");
+            error = true;
+            e.printStackTrace();
+            errorMessage = mContext.getResources().getString(R.string.errorMessageNotSpecifiedQR);
+        }
     }
 
 
-    public void showImageView() {
+    public void showQRCodeImageView() {
         try {
+            if(data_response_map == null){
+                throw new IOException("data_response_map is null!!! in showImageView() ");
+            }
             String base = "";
-            if ("senim".equals(this.company)) {
-                base = (String) CallAPI.getAPIResult(server_response, this.company).get("image");
-            } else if ("rahmet".equals(this.company)) {
-                base = (String) CallAPI.getAPIResult(server_response, this.company).get("qr_image_base_64");
+            if ("senim".equals(mOrder.getCompany())) {
+                base = (String) data_response_map.get("image");
+            } else if ("rahmet".equals(mOrder.getCompany())) {
+                base = (String) data_response_map.get("qr_image_base_64");
             }
 
             if (!"".equals(base) && !"null".equals(base) && base != null) {
@@ -183,7 +215,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 System.out.println("imageViewReference: " + imageViewReference);
                 System.out.println("base: " + base);
                 System.out.println("imageAsBytes: " + imageAsBytes);
-                System.out.println("url: " + (String) CallAPI.getAPIResult(server_response, this.company).get("url"));
+                System.out.println("url: " + (String) CallAPI.getAPIResult(server_response, mOrder.getCompany()).get("url"));
 
                 if (imageViewReference != null) {
                     final ImageView imageView = imageViewReference.get();
@@ -207,14 +239,14 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         }
     }
 
-    public void showAlert(String messsage) {
+    public void showTextAlert(String messsage) {
         AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
 //        ac.setTitle("Result");
         ac.setMessage(messsage);
         ac.setCancelable(true);
 
         ac.setPositiveButton(
-                "Ok",
+                mContext.getResources().getString(R.string.ok),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -224,6 +256,58 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         AlertDialog alert = ac.create();
         alert.show();
+    }
+
+    public void showPaidStatusAlert() {
+
+        try {
+            if(data_response_map == null){
+                throw new IOException("data_response_map is null!!! in showImageView() ");
+            }
+            boolean paid = false;
+            if ("senim".equals(mOrder.getCompany())) {
+                paid = ("2".equals(data_response_map.get("statusId")));
+            } else if ("rahmet".equals(mOrder.getCompany())) {
+//                paid = (Boolean) data_response_map.get("qr_image_base_64"); TODO
+            }
+            ImageView image = new ImageView(mContext);
+            AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
+
+            ac.setTitle(mContext.getResources().getString(R.string.payment));
+
+            if(paid) {
+                image.setImageResource(R.drawable.done);
+                ac.setView(image);
+                ac.setMessage(mContext.getResources().getString(R.string.orderIsPaid));
+            } else{
+                image.setImageResource(R.drawable.cancel);
+                ac.setView(image);
+                ac.setMessage(mContext.getResources().getString(R.string.orderIsNOTPaid));
+            }
+            ac.setCancelable(true);
+
+            ac.setPositiveButton(
+                    mContext.getResources().getString(R.string.ok),
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+//                        dialog.dismiss();
+                        }
+                    });
+
+            AlertDialog alert = ac.create();
+            alert.show();
+        } catch (NullPointerException e) {
+            System.err.println("NullPointerException. showPaidStatusAlert()");
+            error = true;
+            e.printStackTrace();
+            errorMessage = mContext.getResources().getString(R.string.errorMessagePaymentErrorNULL);
+        } catch (IOException e) {
+            System.err.println("IOException. showPaidStatusAlert()");
+            error = true;
+            e.printStackTrace();
+            errorMessage = mContext.getResources().getString(R.string.errorMessagePaymentNotSpecified);
+        }
     }
 
     public void checkResponseForError(String result) {

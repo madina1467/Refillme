@@ -68,6 +68,15 @@
     <string name="errorMessageNotCorrectQR">Не приходит QR Code от сервера.</string>
     <string name="errorMessageNotSpecifiedQR">Не определенная ошибка QR Code.</string>
     <string name="errorMessageNotCorrectRequest">Не правильный запрос на сервер.</string> <!--TODO chech wether it is true or not-->
+    <string name="errorMessagePaymentErrorNULL">Ошибка при проверке статуса оплаты.</string>
+    <string name="errorMessagePaymentNotSpecified">Не определенная ошибка произошла при проверке статуса оплаты.</string>
+
+    <string name="payment">Оплата</string>
+    <string name="orderIsPaid">Ваша оплата прошла успешно.</string>
+    <string name="orderIsNOTPaid">Ваша оплата не подтверждена. Попробуйте еще раз.</string>
+
+    <string name="waitingForConnection">Подождите. Идет обработка.</string>
+    <string name="waiting">Обработка... </string>
 
     <string name="ok">Хорошо</string>
 

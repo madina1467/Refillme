@@ -34,11 +34,11 @@ public class Quantity extends AppCompatActivity {
 
         order = (Order) getIntent().getSerializableExtra("order");
         if(order != null){
-            tv_count.setText("" + order.count);
-            tv_price_for_count.setText(order.price + "  тг");
+            tv_count.setText("" + order.getCount());
+            tv_price_for_count.setText(order.getPrice() + "  тг");
         } else {
             order = new Order();
-            order.product = getIntent().getExtras().getInt("buttonNumber");
+            order.setProduct(getIntent().getExtras().getInt("buttonNumber"));
         }
 
 
@@ -48,7 +48,7 @@ public class Quantity extends AppCompatActivity {
 
         priceBottle = Double.parseDouble(getString(R.string.price_bottle));
 
-        switch (order.product) {
+        switch (order.getProduct()) {
             case 1:
                 priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
 
@@ -78,7 +78,7 @@ public class Quantity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(order.price > 0.0) {
+                if(order.getPrice() > 0.0) {
                     Intent intent = new Intent(v.getContext(), Payment.class);
                     //There is no limit for number of Extras you want to pass to activity
                     intent.putExtra("order", order);
@@ -117,22 +117,22 @@ public class Quantity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.increase:
-                if(max_count >= Double.valueOf(order.count + step)) {
-                    order.count += step;
-                    order.price = order.count * (priceFor100ml / 100.0);
+                if(max_count >= order.getCount() + step) {
+                    order.increaseCountBy(step);
+                    order.calculatePrice(priceFor100ml);
 
-                    tv_count.setText("" + order.count);
-                    tv_price_for_count.setText(order.price + "  тг");
+                    tv_count.setText("" + order.getCount());
+                    tv_price_for_count.setText(order.getPrice() + "  тг");
 
                 }
                 break;
             case R.id.decrease:
-                if(0 <= order.count - step) {
-                    order.count -= step;
-                    order.price = order.count * (priceFor100ml / 100.0);
+                if(0 <= order.getCount() - step) {
+                    order.decreaseCountBy(step);
+                    order.calculatePrice(priceFor100ml);
 
-                    tv_count.setText("" + order.count);
-                    tv_price_for_count.setText(order.price + "  тг");
+                    tv_count.setText("" + order.getCount());
+                    tv_price_for_count.setText(order.getPrice() + "  тг");
                 }
                 break;
             default:
@@ -146,13 +146,12 @@ public class Quantity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.checkBoxBottle:
                 if (checked) {
-                    order.price += priceBottle;
-                    tv_price_for_count.setText(order.price + "  тг");
+                    order.addToPrice(priceBottle);
                 }
                 else {
-                    order.price += priceBottle;
-                    tv_price_for_count.setText(order.price + "  тг");
+                    order.reduceFromPrice(priceBottle);
                 }
+                tv_price_for_count.setText(order.getPrice() + "  тг");
                 break;
         }
     }

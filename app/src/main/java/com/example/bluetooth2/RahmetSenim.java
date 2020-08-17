@@ -13,13 +13,12 @@ public class RahmetSenim extends AppCompatActivity {
 
     Order order;
     Button btnNext, btnCancel;
-    String payBy = "rahmet";
+    String payBy = "rahmet"; // by Default
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rahmet_senim);
-
 
         order = (Order) getIntent().getSerializableExtra("order");
 
@@ -30,7 +29,7 @@ public class RahmetSenim extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Qrcode.class);
-                intent.putExtra("payBy", payBy);
+                order.setCompany(payBy);
                 intent.putExtra("order", order);
                 startActivity(intent);
             }

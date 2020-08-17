@@ -15,7 +15,6 @@ public class Qrcode extends AppCompatActivity {
     Order order;
     Button btnNext, btnCancel, buttonPaid;
     ImageView imageView;
-    String payby = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +24,6 @@ public class Qrcode extends AppCompatActivity {
 
         order = (Order) getIntent().getSerializableExtra("order");
 
-        if(getIntent().getStringExtra("payBy") != null) {
-            payby = getIntent().getStringExtra("payBy");
-        }
 
 //        btnNext = (Button) findViewById(R.id.btnNext);
         buttonPaid = (Button) findViewById(R.id.buttonPaid);
@@ -48,11 +44,11 @@ public class Qrcode extends AppCompatActivity {
         buttonPaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("senim".equals(payby)) {
-                    CallAPI callAPI = new CallAPI(payby);
+                if("senim".equals(order.getCompany())) {
+                    CallAPI callAPI = new CallAPI(order);
                     callAPI.callSenimStatusAPI(Qrcode.this);
-                } else if("rahmet".equals(payby)) {
-                    CallAPI callAPI = new CallAPI(payby);
+                } else if("rahmet".equals(order.getCompany())) {
+                    CallAPI callAPI = new CallAPI(order);
                     callAPI.callRahmetStatusAPI(Qrcode.this);
                 } else {
 //                    TODO
@@ -83,14 +79,14 @@ public class Qrcode extends AppCompatActivity {
 
     public void apiCall(){
 
-        if("senim".equals(payby)) {
-            CallAPI callAPI = new CallAPI(payby);
+        if("senim".equals(order.getCompany())) {
+            CallAPI callAPI = new CallAPI(order);
             callAPI.callSenimCreateAPI(Qrcode.this, imageView);
-        } else if("rahmet".equals(payby)) {
-            CallAPI callAPI = new CallAPI(payby);
+        } else if("rahmet".equals(order.getCompany())) {
+            CallAPI callAPI = new CallAPI(order);
             callAPI.callRahmetCreateAPI(Qrcode.this, imageView);
         } else {
-            CallAPI callAPI = new CallAPI("");
+            CallAPI callAPI = new CallAPI(order);
             callAPI.callSenimAPI(Qrcode.this, imageView);
         }
     }

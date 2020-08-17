@@ -27,7 +27,7 @@ public class Payment extends AppCompatActivity {
         btnNext = (Button) findViewById(R.id.btnNext);
         btnCancel = (Button) findViewById(R.id.btnCancel);
 
-        switch (order.product) {
+        switch (order.getProduct()) {
             case 1:
                 tv1.setText(getString(R.string.name_product1));
                 break;

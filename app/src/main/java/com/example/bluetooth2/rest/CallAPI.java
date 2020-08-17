@@ -3,6 +3,7 @@ package com.example.bluetooth2.rest;
 import android.widget.ImageView;
 
 import com.example.bluetooth2.Qrcode;
+import com.example.bluetooth2.dao.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -13,14 +14,14 @@ import java.util.Map;
 
 public class CallAPI {
 
-    public String company;
+    private Order order;
 
-    public CallAPI(String company){
-        this.company = company;
+    public CallAPI(Order order){
+        this.order = order;
     }
 
     public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
-        new PostMethod(activity, imageView).execute("create", this.company);
+        new PostMethod(activity, order, imageView).execute("create");
     }
 
     public void callRahmetCreateAPI(Qrcode activity, ImageView imageView){
@@ -28,16 +29,16 @@ public class CallAPI {
         //TODO
 //        new PostMethod(activity).execute("check", this.action);
 
-        new PostMethod(activity).execute("auth", this.company);
-        new PostMethod(activity).execute("create", this.company);
+        new PostMethod(activity, order).execute("auth");
+        new PostMethod(activity, order, imageView).execute("create");
     }
 
     public void callSenimStatusAPI(Qrcode activity){
-        new PostMethod(activity).execute("status", this.company);
+        new PostMethod(activity, order).execute("status");
     }
 
     public void callRahmetStatusAPI(Qrcode activity){
-        new PostMethod(activity).execute("status", this.company);
+        new PostMethod(activity, order).execute("status");
     }
 
     public void callSenimAPI(Qrcode activity, ImageView imageView){
