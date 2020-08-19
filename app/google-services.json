@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1011947501599",
+    "firebase_url": "https://refillme-780f5.firebaseio.com",
+    "project_id": "refillme-780f5",
+    "storage_bucket": "refillme-780f5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011947501599:android:99305c0348eb0831773d2a",
+        "android_client_info": {
+          "package_name": "com.refill.me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011947501599-c9ofa9kgk4it8o0sga2dg4ap0kb2s8e4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdRtRBRFTZp7yff_kG5vOvagi0SAroz6s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011947501599-c9ofa9kgk4it8o0sga2dg4ap0kb2s8e4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

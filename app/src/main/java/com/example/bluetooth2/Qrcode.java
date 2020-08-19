@@ -1,7 +1,6 @@
 package com.example.bluetooth2;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,6 +8,8 @@ import android.widget.ImageView;
 
 import com.example.bluetooth2.dao.Order;
 import com.example.bluetooth2.rest.CallAPI;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Qrcode extends AppCompatActivity {
 
@@ -44,10 +45,10 @@ public class Qrcode extends AppCompatActivity {
         buttonPaid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if("senim".equals(order.getCompany())) {
+                if("senim".equals(order.getPaidByCompany())) {
                     CallAPI callAPI = new CallAPI(order);
                     callAPI.callSenimStatusAPI(Qrcode.this);
-                } else if("rahmet".equals(order.getCompany())) {
+                } else if("rahmet".equals(order.getPaidByCompany())) {
                     CallAPI callAPI = new CallAPI(order);
                     callAPI.callRahmetStatusAPI(Qrcode.this);
                 } else {
@@ -79,10 +80,10 @@ public class Qrcode extends AppCompatActivity {
 
     public void apiCall(){
 
-        if("senim".equals(order.getCompany())) {
+        if("senim".equals(order.getPaidByCompany())) {
             CallAPI callAPI = new CallAPI(order);
             callAPI.callSenimCreateAPI(Qrcode.this, imageView);
-        } else if("rahmet".equals(order.getCompany())) {
+        } else if("rahmet".equals(order.getPaidByCompany())) {
             CallAPI callAPI = new CallAPI(order);
             callAPI.callRahmetCreateAPI(Qrcode.this, imageView);
         } else {

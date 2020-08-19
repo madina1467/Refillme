@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.example.bluetooth2.Qrcode;
 import com.example.bluetooth2.dao.Order;
+import com.example.bluetooth2.database.FirebaseDB;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -21,6 +22,8 @@ public class CallAPI {
     }
 
     public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
+        FirebaseDB fb = FirebaseDB.getInstance();
+        fb.add();
         new PostMethod(activity, order, imageView).execute("create");
     }
 

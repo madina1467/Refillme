@@ -1,41 +1,32 @@
 package com.example.bluetooth2.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Order  implements Serializable {
-    private int productId;
+    private Long orderId;
     private int branchId;
     private int product;
-    private int count;
+    private int amount;
     private double price;
-    private String company;
+    private String paidByCompany;
+    private Date date;
 
     public Order() {
-        product = 0;
-        count = 0;
-        price = 0;
+        this.date = new Date();
+        this.orderId = date.getTime();
+        this.product = 0;
+        this.amount = 0;
+        this.price = 0;
+        this.branchId = 1; //TODO correct branch #
     }
 
     public Order(Order order) {
         this.product = order.product;
-        this.count = order.count;
+        this.amount = order.amount;
         this.price = order.price;
-    }
+        this.date = order.date;
 
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public int getBranchId() {
-        return branchId;
-    }
-
-    public void setBranchId(int branchId) {
-        this.branchId = branchId;
     }
 
     public int getProduct() {
@@ -46,12 +37,12 @@ public class Order  implements Serializable {
         this.product = product;
     }
 
-    public int getCount() {
-        return count;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public double getPrice() {
@@ -62,23 +53,23 @@ public class Order  implements Serializable {
         this.price = price;
     }
 
-    public String getCompany() {
-        return company;
+    public String getPaidByCompany() {
+        return paidByCompany;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
+    public void setPaidByCompany(String paidByCompany) {
+        this.paidByCompany = paidByCompany;
     }
 
     public void increaseCountBy(int step){
-        this.count += step;
+        this.amount += step;
     }
     public void decreaseCountBy(int step){
-        this.count -= step;
+        this.amount -= step;
     }
 
     public void calculatePrice(double priceFor100ml){
-        this.price = this.count * (priceFor100ml / 100.0);
+        this.price = this.amount * (priceFor100ml / 100.0);
     }
 
 

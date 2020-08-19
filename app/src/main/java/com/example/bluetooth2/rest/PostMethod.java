@@ -71,7 +71,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
             ApiData apiData;
 
-            if ("senim".equals(mOrder.getCompany())) {
+            if ("senim".equals(mOrder.getPaidByCompany())) {
                 apiData = new ApiDataSenim(action);
             } else {
                 apiData = new ApiDataRahmet(action);
@@ -81,7 +81,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 //                callGetApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
             } else {
                 callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
-                if ("rahmet".equals(mOrder.getCompany()) && "auth".equals(action)) {
+                if ("rahmet".equals(mOrder.getPaidByCompany()) && "auth".equals(action)) {
                     ApiData.setRahmetToken(server_response);
                 }
             }
@@ -108,7 +108,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
-        Log.e("Response from: " + mOrder.getCompany() + "; method: " + action, "" + server_response);
+        Log.e("Response from: " + mOrder.getPaidByCompany() + "; method: " + action, "" + server_response);
 
         dialog.cancel();
 
@@ -152,11 +152,11 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         conn.setConnectTimeout(TIMEOUT_MILLISEC);
         conn.setReadTimeout(TIMEOUT_MILLISEC);
-        if ("senim".equals(mOrder.getCompany())) {
+        if ("senim".equals(mOrder.getPaidByCompany())) {
 //            conn.setRequestProperty("Content-Type", "application/json"); //TODO tell them!
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestProperty("X-Senim-API-Token", "o9mubdh7ri5gdabbjvl89el1c0");
-        } else if ("rahmet".equals(mOrder.getCompany())) {
+        } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             if (!"auth".equals(action) && !"".equals(ApiData.token)) {
                 conn.setRequestProperty("Authorization", ApiData.token);
@@ -178,10 +178,10 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
     private void responseMap() {
         try {
-            if ("senim".equals(mOrder.getCompany())) {
-                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getCompany());
-            } else if ("rahmet".equals(mOrder.getCompany())) {
-                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getCompany());
+            if ("senim".equals(mOrder.getPaidByCompany())) {
+                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany());
+            } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
+                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany());
             }
         } catch (NullPointerException e) {
             System.err.println("NullPointerException. responseMap()");
@@ -203,9 +203,9 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 throw new IOException("data_response_map is null!!! in showImageView() ");
             }
             String base = "";
-            if ("senim".equals(mOrder.getCompany())) {
+            if ("senim".equals(mOrder.getPaidByCompany())) {
                 base = (String) data_response_map.get("image");
-            } else if ("rahmet".equals(mOrder.getCompany())) {
+            } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
                 base = (String) data_response_map.get("qr_image_base_64");
             }
 
@@ -215,7 +215,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 System.out.println("imageViewReference: " + imageViewReference);
                 System.out.println("base: " + base);
                 System.out.println("imageAsBytes: " + imageAsBytes);
-                System.out.println("url: " + (String) CallAPI.getAPIResult(server_response, mOrder.getCompany()).get("url"));
+                System.out.println("url: " + (String) CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany()).get("url"));
 
                 if (imageViewReference != null) {
                     final ImageView imageView = imageViewReference.get();
@@ -265,9 +265,9 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 throw new IOException("data_response_map is null!!! in showImageView() ");
             }
             boolean paid = false;
-            if ("senim".equals(mOrder.getCompany())) {
+            if ("senim".equals(mOrder.getPaidByCompany())) {
                 paid = ("2".equals(data_response_map.get("statusId")));
-            } else if ("rahmet".equals(mOrder.getCompany())) {
+            } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
 //                paid = (Boolean) data_response_map.get("qr_image_base_64"); TODO
             }
             ImageView image = new ImageView(mContext);

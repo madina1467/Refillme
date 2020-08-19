@@ -1,7 +1,6 @@
 package com.example.bluetooth2;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +9,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.bluetooth2.dao.Order;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Quantity extends AppCompatActivity {
 
@@ -34,7 +35,7 @@ public class Quantity extends AppCompatActivity {
 
         order = (Order) getIntent().getSerializableExtra("order");
         if(order != null){
-            tv_count.setText("" + order.getCount());
+            tv_count.setText("" + order.getAmount());
             tv_price_for_count.setText(order.getPrice() + "  тг");
         } else {
             order = new Order();
@@ -117,21 +118,21 @@ public class Quantity extends AppCompatActivity {
 
         switch (v.getId()) {
             case R.id.increase:
-                if(max_count >= order.getCount() + step) {
+                if(max_count >= order.getAmount() + step) {
                     order.increaseCountBy(step);
                     order.calculatePrice(priceFor100ml);
 
-                    tv_count.setText("" + order.getCount());
+                    tv_count.setText("" + order.getAmount());
                     tv_price_for_count.setText(order.getPrice() + "  тг");
 
                 }
                 break;
             case R.id.decrease:
-                if(0 <= order.getCount() - step) {
+                if(0 <= order.getAmount() - step) {
                     order.decreaseCountBy(step);
                     order.calculatePrice(priceFor100ml);
 
-                    tv_count.setText("" + order.getCount());
+                    tv_count.setText("" + order.getAmount());
                     tv_price_for_count.setText(order.getPrice() + "  тг");
                 }
                 break;
