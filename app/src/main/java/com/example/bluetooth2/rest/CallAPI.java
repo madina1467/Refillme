@@ -23,7 +23,7 @@ public class CallAPI {
 
     public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
         FirebaseDB fb = FirebaseDB.getInstance();
-        fb.add();
+        fb.add(order);
         new PostMethod(activity, order, imageView).execute("create");
     }
 

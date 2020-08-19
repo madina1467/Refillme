@@ -39,7 +39,7 @@ public class Quantity extends AppCompatActivity {
             tv_price_for_count.setText(order.getPrice() + "  тг");
         } else {
             order = new Order();
-            order.setProduct(getIntent().getExtras().getInt("buttonNumber"));
+            order.setProductId(getIntent().getExtras().getInt("buttonNumber"));
         }
 
 
@@ -49,7 +49,7 @@ public class Quantity extends AppCompatActivity {
 
         priceBottle = Double.parseDouble(getString(R.string.price_bottle));
 
-        switch (order.getProduct()) {
+        switch (order.getProductId()) {
             case 1:
                 priceFor100ml = Double.parseDouble(getString(R.string.price_product1_100ml));
 
