@@ -79,16 +79,7 @@ public class Qrcode extends AppCompatActivity {
     }
 
     public void apiCall(){
-
-        if("senim".equals(order.getPaidByCompany())) {
-            CallAPI callAPI = new CallAPI(order);
-            callAPI.callSenimCreateAPI(Qrcode.this, imageView);
-        } else if("rahmet".equals(order.getPaidByCompany())) {
-            CallAPI callAPI = new CallAPI(order);
-            callAPI.callRahmetCreateAPI(Qrcode.this, imageView);
-        } else {
-            CallAPI callAPI = new CallAPI(order);
-            callAPI.callSenimAPI(Qrcode.this, imageView);
-        }
+        CallAPI callAPI = new CallAPI(order);
+        callAPI.callCreateAPI(Qrcode.this, imageView);
     }
 }

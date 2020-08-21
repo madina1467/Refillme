@@ -23,18 +23,20 @@ public class CallAPI {
         this.fb = FirebaseDB.getInstance();
     }
 
-    public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
-        fb.add(order);
-        new PostMethod(activity, order, imageView).execute("create");
-    }
-
-    public void callRahmetCreateAPI(Qrcode activity, ImageView imageView){
-
-        //TODO
-//        new PostMethod(activity).execute("check", this.action);
-
-        new PostMethod(activity, order).execute("auth");
-        new PostMethod(activity, order, imageView).execute("create");
+    public void callCreateAPI(Qrcode activity, ImageView imageView){
+        fb.addOrder(order);
+        if("senim".equals(this.order.getPaidByCompany())) {
+            new PostMethod(activity, order, imageView).execute("create");
+        } else if("rahmet".equals(this.order.getPaidByCompany())){
+            //TODO
+            //new PostMethod(activity).execute("check", this.action);
+            new PostMethod(activity, order).execute("auth");
+            new PostMethod(activity, order, imageView).execute("create");
+        } else {
+            System.err.println("COMPANY TO READ API NOT SHOWN");
+//            return readAPIData(root);
+//            throw new IOException("COMPANY TO READ API NOT SHOWN");
+        }
     }
 
     public void callSenimStatusAPI(Qrcode activity){

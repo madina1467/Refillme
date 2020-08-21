@@ -31,7 +31,7 @@ public class FirebaseDB {
         db.setFirestoreSettings(settings);
     }
 
-    public void add(Order order){
+    public void addOrder(Order order){
         Map<String, Object> orderMap = new HashMap<>();
 
         orderMap.put("orderId", order.getOrderId());
@@ -40,11 +40,12 @@ public class FirebaseDB {
         orderMap.put("productName", order.getProductName());
         orderMap.put("amount", order.getAmount());
         orderMap.put("price", order.getPrice());
+        orderMap.put("city", order.getCity());
         orderMap.put("paidByCompany", order.getPaidByCompany());
         orderMap.put("date", order.getDate());
         orderMap.put("paymentStatus", order.getPaymentStatus());
 
-        db.collection(order.getCity()).document(String.valueOf(order.getBranchId()))
+        db.collection("orders").document(order.getCity() + " - "+String.valueOf(order.getBranchId()))
                 .collection(order.getOrderDate()).document(order.getOrderTime())
                 .set(orderMap);
     }
