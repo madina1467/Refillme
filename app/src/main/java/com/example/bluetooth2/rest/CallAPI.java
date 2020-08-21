@@ -16,13 +16,14 @@ import java.util.Map;
 public class CallAPI {
 
     private Order order;
+    private FirebaseDB fb;
 
     public CallAPI(Order order){
         this.order = order;
+        this.fb = FirebaseDB.getInstance();
     }
 
     public void callSenimCreateAPI(Qrcode activity, ImageView imageView){
-        FirebaseDB fb = FirebaseDB.getInstance();
         fb.add(order);
         new PostMethod(activity, order, imageView).execute("create");
     }
@@ -69,12 +70,12 @@ public class CallAPI {
     }
 
     public static Map<String,Object> readAPIData(JsonElement root) throws IOException {
-        Map<String,Object> data = new ObjectMapper()
-                .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
-//        for (Map.Entry<String, Object> entry : data.entrySet()) {
-//            System.out.println("!! AAAA" + entry.getKey() + ":" + entry.getValue());
-//        }
-        return data;
+        if(root != null){
+            Map<String,Object> data = new ObjectMapper()
+                    .readValue(root.getAsJsonObject().get("data").getAsJsonObject().toString(), HashMap.class);
+            return data;
+        }
+        throw new IOException("Error root is NULL");
     }
 
     public static Map<String,Object> readSenimAPIData(JsonElement root) throws IOException {
@@ -87,6 +88,9 @@ public class CallAPI {
         JsonElement root = new JsonParser().parse(builder);
         Map<String,Object> data = new ObjectMapper()
                 .readValue(root.getAsJsonObject().toString(), HashMap.class);
+//        for (Map.Entry<String, Object> entry : data.entrySet()) {
+//            System.out.println("!! BBB" + entry.getKey() + ":" + entry.getValue());
+//        }
         return data;
     }
 

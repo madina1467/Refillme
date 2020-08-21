@@ -23,7 +23,7 @@ public class ApiDataSenim extends ApiData {
                 break;
             case "create":
                 params.put("branchId", "3474");
-                params.put("dimension", "100");
+                params.put("dimension", "200");
                 params.put("duration", "10000");
                 params.put("format", "1");
                 params.put("orderAmount", "12332");

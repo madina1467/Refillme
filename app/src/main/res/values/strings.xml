@@ -67,7 +67,7 @@
     <string name="errorMessageNotSpecified">Не определенная ошибка.</string>
     <string name="errorMessageNotCorrectQR">Не приходит QR Code от сервера.</string>
     <string name="errorMessageNotSpecifiedQR">Не определенная ошибка QR Code.</string>
-    <string name="errorMessageNotCorrectRequest">Не правильный запрос на сервер.</string> <!--TODO chech wether it is true or not-->
+    <string name="errorMessageErrorRespond">С сервера пришла ошибка.</string> <!--TODO chech wether it is true or not-->
     <string name="errorMessagePaymentErrorNULL">Ошибка при проверке статуса оплаты.</string>
     <string name="errorMessagePaymentNotSpecified">Не определенная ошибка произошла при проверке статуса оплаты.</string>
 

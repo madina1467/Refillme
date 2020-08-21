@@ -26,6 +26,7 @@ public class Order  implements Serializable {
         this.amount = 0;
         this.price = 0;
         this.branchId = 1; //TODO correct branch #
+        this.paymentStatus = 1;
         this.city = "Nur-Sultan";
     }
 

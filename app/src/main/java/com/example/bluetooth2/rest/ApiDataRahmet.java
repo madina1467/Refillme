@@ -27,6 +27,7 @@ public class ApiDataRahmet extends ApiData{
                 params.put("merchant_order_id", "123543");
                 params.put("amount", "1000");
                 params.put("token", "baeb767cc64f213a2e54fd2ba436d80c");
+                params.put("image_size", "200");
                 break;
             case "status":
                 params.put("merchant_order_ids[]", "123543");

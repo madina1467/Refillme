@@ -101,7 +101,6 @@ public class PostMethod extends AsyncTask<String, Void, String> {
             error = true;
             errorMessage = mContext.getResources().getString(R.string.errorMessageNotSpecified);
         }
-
         return server_response;
     }
 
@@ -112,9 +111,13 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
         dialog.cancel();
 
+
+        this.checkResponseForError();
+
         if(error) {
             showTextAlert(errorMessage);
         } else {
+            this.responseMap();
             if ("create".equals(action)) {
                 showQRCodeImageView();
             } else if ("status".equals(action)) {
@@ -172,17 +175,11 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         reader.close();
         conn.disconnect();
         server_response = builder.toString();
-        this.checkResponseForError(server_response);
-        this.responseMap();
     }
 
     private void responseMap() {
         try {
-            if ("senim".equals(mOrder.getPaidByCompany())) {
-                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany());
-            } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
-                data_response_map = CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany());
-            }
+            data_response_map = CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany());
         } catch (NullPointerException e) {
             System.err.println("NullPointerException. responseMap()");
             error = true;
@@ -207,13 +204,15 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 base = (String) data_response_map.get("image");
             } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
                 base = (String) data_response_map.get("qr_image_base_64");
+                System.out.println("base: " + base);
+                base = base.substring(22);
+                System.out.println("base: " + base);
             }
 
             if (!"".equals(base) && !"null".equals(base) && base != null) {
                 byte[] imageAsBytes = Base64.decode(base.getBytes(), Base64.DEFAULT);
 
                 System.out.println("imageViewReference: " + imageViewReference);
-                System.out.println("base: " + base);
                 System.out.println("imageAsBytes: " + imageAsBytes);
                 System.out.println("url: " + (String) CallAPI.getAPIResult(server_response, mOrder.getPaidByCompany()).get("url"));
 
@@ -268,7 +267,10 @@ public class PostMethod extends AsyncTask<String, Void, String> {
             if ("senim".equals(mOrder.getPaidByCompany())) {
                 paid = ("2".equals(data_response_map.get("statusId")));
             } else if ("rahmet".equals(mOrder.getPaidByCompany())) {
-//                paid = (Boolean) data_response_map.get("qr_image_base_64"); TODO
+                String data = (String) data_response_map.get(this.mOrder.getOrderId()); //TODO
+                System.err.println("!!! data: " + data);
+                paid = (boolean) CallAPI.readAPIOtputResult(data).get("is_paid");
+                System.err.println("!!! is_paid: " + paid);
             }
             ImageView image = new ImageView(mContext);
             AlertDialog.Builder ac = new AlertDialog.Builder(mContext);
@@ -284,6 +286,8 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 ac.setView(image);
                 ac.setMessage(mContext.getResources().getString(R.string.orderIsNOTPaid));
             }
+            image.setMaxHeight(100);
+            image.setMaxWidth(100);
             ac.setCancelable(true);
 
             ac.setPositiveButton(
@@ -310,9 +314,9 @@ public class PostMethod extends AsyncTask<String, Void, String> {
         }
     }
 
-    public void checkResponseForError(String result) {
+    public void checkResponseForError() {
         try {
-            Map<String,Object> output = readAPIOtputResult(result);
+            Map<String,Object> output = readAPIOtputResult(this.server_response);
             // rahmet
             if(output.get("status") != null && output.get("error_code") != null) {
                 if ("error".equals(output.get("status").toString()) || !"0".equals(output.get("error_code").toString())) {
@@ -323,7 +327,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
             System.err.println("IOException. checkForError()");
             error = true;
             e.printStackTrace();
-            errorMessage = mContext.getResources().getString(R.string.errorMessageNotCorrectRequest);
+            errorMessage = mContext.getResources().getString(R.string.errorMessageErrorRespond);
         }
     }
 
