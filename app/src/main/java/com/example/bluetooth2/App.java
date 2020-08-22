@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat;
 
 public class App extends Application {
     private static Resources resources;
-    protected volatile static String uuid = "";
+    protected volatile static String uuid = ""; // 357750044630126
 
     @Override
     public void onCreate() {
@@ -46,5 +46,4 @@ public class App extends Application {
         }
         return telephonyManager.getImei();
     }
-
 }
