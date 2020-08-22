@@ -13,6 +13,9 @@ import android.widget.ImageView;
 import com.example.bluetooth2.Qrcode;
 import com.example.bluetooth2.R;
 import com.example.bluetooth2.dao.Order;
+import com.example.bluetooth2.dto.ApiData;
+import com.example.bluetooth2.dto.ApiDataRahmet;
+import com.example.bluetooth2.dto.ApiDataSenim;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -80,7 +83,7 @@ public class PostMethod extends AsyncTask<String, Void, String> {
             if ("GET".equals(apiData.getRequestMethod())) {
 //                callGetApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
             } else {
-                callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
+                callApi(apiData.getURL(), apiData.getParams(this.mOrder), apiData.getRequestMethod());
                 if ("rahmet".equals(mOrder.getPaidByCompany()) && "auth".equals(action)) {
                     ApiData.setRahmetToken(server_response);
                 }
@@ -277,6 +280,9 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
             ac.setTitle(mContext.getResources().getString(R.string.payment));
 
+            image.setMaxHeight(100); //NOT WORKING
+            image.setMaxWidth(100);
+
             if(paid) {
                 image.setImageResource(R.drawable.done);
                 ac.setView(image);
@@ -286,8 +292,6 @@ public class PostMethod extends AsyncTask<String, Void, String> {
                 ac.setView(image);
                 ac.setMessage(mContext.getResources().getString(R.string.orderIsNOTPaid));
             }
-            image.setMaxHeight(100);
-            image.setMaxWidth(100);
             ac.setCancelable(true);
 
             ac.setPositiveButton(
@@ -316,6 +320,9 @@ public class PostMethod extends AsyncTask<String, Void, String> {
 
     public void checkResponseForError() {
         try {
+            if(this.server_response == null){
+                throw new IOException("Error answer from server.");
+            }
             Map<String,Object> output = readAPIOtputResult(this.server_response);
             // rahmet
             if(output.get("status") != null && output.get("error_code") != null) {

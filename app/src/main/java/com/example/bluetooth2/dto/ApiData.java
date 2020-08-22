@@ -1,5 +1,6 @@
-package com.example.bluetooth2.rest;
+package com.example.bluetooth2.dto;
 
+import com.example.bluetooth2.dao.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public abstract class ApiData {
 
-    protected static String token;
+    public static String token;
     protected String action;
 
     public ApiData(String action) {
@@ -24,10 +25,10 @@ public abstract class ApiData {
         ApiData.token = (String) data.get("token");
     }
 
-    abstract HashMap<String, String> getParams();
+    public abstract HashMap<String, String> getParams(Order order);
 
-    abstract String getURL() throws IOException;
+    public abstract String getURL() throws IOException;
 
-    abstract String getRequestMethod() throws IOException;
+    public abstract String getRequestMethod() throws IOException;
 
 }

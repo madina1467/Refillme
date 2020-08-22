@@ -1,4 +1,6 @@
-package com.example.bluetooth2.rest;
+package com.example.bluetooth2.dto;
+
+import com.example.bluetooth2.dao.Order;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,7 +13,7 @@ public class ApiDataRahmet extends ApiData{
         super(action);
     }
 
-    public HashMap<String, String> getParams(){
+    public HashMap<String, String> getParams(Order order){
         HashMap<String, String> params = new HashMap<String, String>();
 
         switch (this.action){
@@ -24,19 +26,20 @@ public class ApiDataRahmet extends ApiData{
                 params.put("grant_type", "client_credentials");
                 break;
             case "create":
-                params.put("merchant_order_id", "123543");
-                params.put("amount", "1000");
-                params.put("token", "baeb767cc64f213a2e54fd2ba436d80c");
+                params.put("merchant_order_id", order.getOrderId().toString());
+                params.put("amount", String.valueOf(order.getPrice()));
                 params.put("image_size", "200");
+                params.put("token", "baeb767cc64f213a2e54fd2ba436d80c");
                 break;
             case "status":
-                params.put("merchant_order_ids[]", "123543");
+                params.put("merchant_order_ids[]", order.getOrderId().toString());
                 break;
 //            case "refund":
 //                break;
         }
         return params;
     }
+
 
     public String getURL() throws IOException {
         switch (this.action){

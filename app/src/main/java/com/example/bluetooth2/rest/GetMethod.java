@@ -7,7 +7,10 @@ import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.example.bluetooth2.MainActivity;
+import com.example.bluetooth2.Qrcode;
+import com.example.bluetooth2.dao.Order;
+import com.example.bluetooth2.dto.ApiData;
+import com.example.bluetooth2.dto.ApiDataRahmet;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,12 +32,13 @@ public class GetMethod extends AsyncTask<String, Void, String> {
     String token = "";
 
     private Context mContext;
+    private Order mOrder;
 
-    public GetMethod(MainActivity activity) {
+    public GetMethod(Qrcode activity, Order order) {
         dialog = new ProgressDialog(activity);
         mContext = activity;
+        mOrder = order;
     }
-
     @Override
     protected void  onPreExecute() {
         super.onPreExecute();
@@ -53,7 +57,7 @@ public class GetMethod extends AsyncTask<String, Void, String> {
 
             ApiData apiData = new ApiDataRahmet(action);
 //            System.out.println("!!! Action:" + this.action + "; Token: " +ApiData.token);
-            callApi(apiData.getURL(), apiData.getParams(), apiData.getRequestMethod());
+            callApi(apiData.getURL(), apiData.getParams(mOrder), apiData.getRequestMethod());
 
             if("auth".equals(action)) {
                 ApiData.setRahmetToken(server_response);

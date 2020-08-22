@@ -1,4 +1,6 @@
-package com.example.bluetooth2.rest;
+package com.example.bluetooth2.dto;
+
+import com.example.bluetooth2.dao.Order;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,7 +11,7 @@ public class ApiDataSenim extends ApiData {
         super(action);
     }
 
-    public HashMap<String, String> getParams(){
+    public HashMap<String, String> getParams(Order order){
         HashMap<String, String> params = new HashMap<String, String>();
 
         switch (this.action){
@@ -22,15 +24,15 @@ public class ApiDataSenim extends ApiData {
                 params.put("grant_type", "client_credentials");
                 break;
             case "create":
-                params.put("branchId", "3474");
+                params.put("branchId", String.valueOf(order.getBranchId()));
                 params.put("dimension", "200");
                 params.put("duration", "10000");
                 params.put("format", "1");
-                params.put("orderAmount", "12332");
-                params.put("orderId", "11");
+                params.put("orderAmount", String.valueOf(order.getPrice()));
+                params.put("orderId", order.getOrderId().toString());
                 break;
             case "status":
-                params.put("orderId", "11");
+                params.put("orderId", order.getOrderId().toString());
                 break;
 //            case "refund":
 //                break;
