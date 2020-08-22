@@ -1,4 +1,4 @@
-package com.example.bluetooth2.bluetoothConnection;
+package com.example.bluetooth2.service;
 
 import android.app.Activity;
 import android.app.Service;
