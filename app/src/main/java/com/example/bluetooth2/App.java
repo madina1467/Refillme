@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat;
 
 public class App extends Application {
     private static Resources resources;
+//    private static BluetoothConnection bluetoothConnection;
     protected volatile static String uuid = ""; // 357750044630126
 
     @Override
